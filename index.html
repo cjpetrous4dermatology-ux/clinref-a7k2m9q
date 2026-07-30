@@ -44,14 +44,36 @@
   td .sub{color:var(--muted);font-size:13px;}
   .em{font-style:italic;}
   .dash{color:var(--muted);font-size:16px;}
-  .abx{margin-top:8px;font-size:12.5px;line-height:1.65;}
-  .abx > div{margin-top:4px;padding-left:22px;text-indent:-22px;}
-  .abx .sr{display:inline-block;width:16px;text-align:center;border-radius:4px;
-    font-weight:700;font-size:11.5px;margin-right:6px;text-indent:0;}
-  .abx .s{background:var(--green-bg);color:var(--green-tx);}
-  .abx .i{background:var(--amber-bg);color:var(--amber-tx);}
-  .abx .r{background:var(--red-bg);color:var(--red-tx);}
-  .abx .iso{font-weight:700;color:var(--navy);font-size:12.5px;margin-top:9px;text-indent:0;padding-left:0;}
+  .isolist{margin-top:10px;font-size:12.5px;line-height:1.6;}
+  .isolist div{margin-top:3px;color:var(--muted);}
+  .isolist b{color:var(--navy);}
+  /* 藥敏對照總表 */
+  .abx-sec{padding:24px 18px 28px;border-top:3px solid var(--navy);background:#fff;}
+  .abx-sec h2{margin:0 0 6px;font-size:17px;color:var(--navy);letter-spacing:.3px;}
+  .abx-sec .note{font-size:12.5px;color:var(--muted);line-height:1.7;margin-bottom:14px;}
+  .mx-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  table.mx{width:100%;min-width:660px;border-collapse:collapse;table-layout:fixed;}
+  table.mx col.drug{width:200px;}
+  table.mx th,table.mx td{border:1px solid var(--line);text-align:center;padding:0;}
+  table.mx thead th{background:var(--navy);color:#fff;font-size:12.5px;font-weight:700;
+    padding:8px 4px;line-height:1.35;border-color:#2a4570;}
+  table.mx thead th.iso{background:#1d3a63;font-size:11px;font-weight:400;padding:6px 3px;line-height:1.3;}
+  table.mx thead th.iso .em{font-style:italic;}
+  table.mx thead th.corner2{background:#0d1c34;}
+  table.mx td.drug{text-align:left;padding:6px 10px;font-size:12.5px;font-weight:600;
+    background:var(--label-bg);color:var(--ink);}
+  table.mx td.v{font-size:12.5px;font-weight:700;padding:6px 2px;}
+  table.mx td.v.S{background:var(--green-bg);color:var(--green-tx);}
+  table.mx td.v.I{background:var(--amber-bg);color:var(--amber-tx);}
+  table.mx td.v.R{background:var(--red-bg);color:var(--red-tx);}
+  table.mx td.v.n{color:#cdd5e0;font-weight:400;background:#fcfdfe;}
+  table.mx tr.grp td{background:#eaeff7;color:var(--navy);font-size:11.5px;font-weight:700;
+    text-align:left;padding:5px 10px;letter-spacing:.6px;}
+  .lgd{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-top:14px;
+    font-size:12px;color:var(--muted);}
+  .lgd i{font-style:normal;display:inline-flex;align-items:center;}
+  .lgd b{display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;
+    border-radius:4px;font-size:11.5px;margin-right:6px;}
   .badge{display:inline-block;padding:3px 10px;border-radius:6px;font-size:13px;font-weight:700;margin-top:8px;line-height:1.5;}
   .b-red{background:var(--red-bg);color:var(--red-tx);}
   .b-amber{background:var(--amber-bg);color:var(--amber-tx);}
@@ -132,11 +154,8 @@
           <span class="badge b-green">Oxacillin S ＋ Cefoxitin S</span>
           <span class="badge b-blue">單一菌落型態・少量生長</span>
         </div>
-        <div class="abx">
-          <div class="iso">(a) <span class="em">Staphylococcus</span> sp.（coagulase-negative）</div>
-          <div><span class="sr s">S</span>Oxacillin、Cefoxitin、Amoxicillin/Clavulanate、Cefazolin、Cephalexin、Cefadroxil、Cefovecin、Imipenem、Meropenem、Gentamicin、Neomycin、Ciprofloxacin、Enrofloxacin、Levofloxacin、Doxycycline、Minocycline、TMP/SMX、Mupirocin、Fusidic acid</div>
-          <div><span class="sr i">I</span>Azithromycin、Clindamycin</div>
-          <div><span class="sr r">R</span>Penicillin、Ampicillin/Amoxicillin、Ceftazidime、Cefixime、Metronidazole</div>
+        <div class="isolist">
+          <div><b>(a)</b> <span class="em">Staphylococcus</span> sp.（CoNS）　→ 藥敏見下方對照表</div>
         </div>
         <div class="line sub" style="margin-top:8px;">中興大學動醫中心 RCAM-26-20759</div>
       </td>
@@ -149,17 +168,29 @@
           <span class="badge b-amber">右耳雙重感染</span>
           <span class="badge b-green">Oxacillin S</span>
         </div>
-        <div class="abx">
-          <div class="iso">(a) <span class="em">Staphylococcus pseudintermedius</span></div>
-          <div><span class="sr s">S</span>Oxacillin、Amoxicillin/Clavulanate、Cefazolin、Cephalexin、Cefadroxil、Cefovecin、Imipenem、Meropenem、Ciprofloxacin、Enrofloxacin、Minocycline、Fusidic acid、Florfenicol</div>
-          <div><span class="sr r">R</span>Penicillin、Ampicillin/Amoxicillin、Gentamicin、Neomycin、Cefixime、Polymyxin B、Doxycycline、Azithromycin、TMP/SMX、Clindamycin、Metronidazole</div>
-          <div class="iso">(b) <span class="em">Corynebacterium</span> sp.</div>
-          <div><span class="sr s">S</span>Penicillin、Ampicillin/Amoxicillin、Amoxicillin/Clavulanate、Cefazolin、Cephalexin、Cefadroxil、Cefovecin、Imipenem、Meropenem、Gentamicin、Neomycin、Ciprofloxacin、Enrofloxacin、Doxycycline、Minocycline、Azithromycin、Clindamycin、Fusidic acid、Florfenicol</div>
-          <div><span class="sr r">R</span>Cefixime、Polymyxin B、TMP/SMX、Metronidazole</div>
+        <div class="isolist">
+          <div><b>(a)</b> <span class="em">Staphylococcus pseudintermedius</span></div>
+          <div><b>(b)</b> <span class="em">Corynebacterium</span> sp.　→ 藥敏見下方對照表</div>
         </div>
         <div class="line sub" style="margin-top:8px;">中興大學動醫中心 RCAM-26-20752</div>
       </td>
-      <td><div class="dash">—</div></td>
+      <td>
+        <div class="line sub" style="margin-bottom:4px;">2026.07.28 送檢／07.30 完成</div>
+        <div class="line"><b>(1) 左中耳黏液</b><br>抹片：Gram stain — no organism seen<br>培養：<b style="color:var(--green-tx);">無生長</b></div>
+        <div class="line sub" style="margin-top:2px;">平板 48hr 無生長；液態 (1:10) 48hr 無生長；二次接種 24hr 無生長</div>
+        <div class="line" style="margin-top:8px;"><b>(2) 右中耳黏液</b><br>抹片：(2+) gram (−) bacilli<br>培養：(3+) <span class="em">Bordetella bronchiseptica</span></div>
+        <div class="line" style="margin-top:8px;"><b>(3) 左鼻分泌物</b><br>抹片：(3+) gram (+) cocci<br>培養：(4+) <span class="em">Staphylococcus pseudintermedius</span>（MRSP）</div>
+        <div class="badges">
+          <span class="badge b-red">MRSP（甲氧西林抗藥）</span>
+          <span class="badge b-amber">右中耳 Bordetella</span>
+          <span class="badge b-green">左中耳無生長</span>
+        </div>
+        <div class="isolist">
+          <div><b>(a)</b> <span class="em">Bordetella bronchiseptica</span></div>
+          <div><b>(b)</b> <span class="em">S. pseudintermedius</span>（MRSP）　→ 藥敏見下方對照表</div>
+        </div>
+        <div class="line sub" style="margin-top:8px;">中興大學動醫中心 RCAM-26-20746</div>
+      </td>
     </tr>
     <!-- 耳鏡 VOS -->
     <tr>
@@ -307,6 +338,59 @@
     </tr>
   </tbody>
 </table>
+<div class="abx-sec">
+  <h2>藥敏對照總表</h2>
+  <div class="note">2026.07.28 送檢／07.30 完成　·　國立中興大學動物醫學研究中心（disk diffusion, Kirby-Bauer；CLSI M100 ED32:2022 ＋ VET01S ED5:2020）<br>「·」＝該菌株未做此項；具 intrinsic／circumstantial resistance 之藥物（如 aerobe 對 Metronidazole）報告一律以 R 表示。</div>
+  <div class="mx-scroll">
+  <table class="mx">
+    <colgroup><col class="drug"><col><col><col><col><col></colgroup>
+    <thead>
+      <tr><th class="corner2" rowspan="2">抗生素</th><th colspan="1">🐶 梅西 Cube</th><th colspan="2">🐶 拿鐵</th><th colspan="2">🐱 DODO 嘟嘟</th></tr>
+      <tr><th class="iso"><span class="em">Staphylococcus</span> sp. (CoNS)</th><th class="iso"><span class="em">S. pseudintermedius</span></th><th class="iso"><span class="em">Corynebacterium</span> sp.</th><th class="iso"><span class="em">Bordetella bronchiseptica</span></th><th class="iso"><span class="em">S. pseudintermedius</span> (MRSP)</th></tr>
+    </thead>
+    <tbody>
+      <tr class="grp"><td colspan="6">青黴素類 PENICILLINS</td></tr>
+      <tr><td class="drug">Penicillin (P)</td><td class="v R">R</td><td class="v R">R</td><td class="v n">·</td><td class="v n">·</td><td class="v R">R</td></tr>
+      <tr><td class="drug">Ampicillin・Amoxicillin (AM)</td><td class="v R">R</td><td class="v R">R</td><td class="v S">S</td><td class="v R">R</td><td class="v R">R</td></tr>
+      <tr><td class="drug">Oxacillin (OX)</td><td class="v S">S</td><td class="v S">S</td><td class="v n">·</td><td class="v n">·</td><td class="v R">R</td></tr>
+      <tr><td class="drug">Amoxicillin/Clavulanate (AMC)</td><td class="v S">S</td><td class="v S">S</td><td class="v S">S</td><td class="v S">S</td><td class="v R">R</td></tr>
+      <tr class="grp"><td colspan="6">頭孢菌素 CEPHALOSPORINS</td></tr>
+      <tr><td class="drug">Cefazolin (CZ)</td><td class="v S">S</td><td class="v S">S</td><td class="v S">S</td><td class="v R">R</td><td class="v R">R</td></tr>
+      <tr><td class="drug">Cephalexin (CL)</td><td class="v S">S</td><td class="v S">S</td><td class="v S">S</td><td class="v R">R</td><td class="v R">R</td></tr>
+      <tr><td class="drug">Cefadroxil (CFR)</td><td class="v S">S</td><td class="v S">S</td><td class="v S">S</td><td class="v R">R</td><td class="v R">R</td></tr>
+      <tr><td class="drug">Cefovecin (CVN)</td><td class="v S">S</td><td class="v S">S</td><td class="v S">S</td><td class="v R">R</td><td class="v R">R</td></tr>
+      <tr><td class="drug">Ceftazidime (CAZ)</td><td class="v R">R</td><td class="v n">·</td><td class="v n">·</td><td class="v n">·</td><td class="v n">·</td></tr>
+      <tr><td class="drug">Cefixime (CFM)</td><td class="v R">R</td><td class="v R">R</td><td class="v R">R</td><td class="v R">R</td><td class="v R">R</td></tr>
+      <tr><td class="drug">Cefoxitin (FOX)</td><td class="v S">S</td><td class="v n">·</td><td class="v n">·</td><td class="v n">·</td><td class="v n">·</td></tr>
+      <tr class="grp"><td colspan="6">碳青黴烯 CARBAPENEMS</td></tr>
+      <tr><td class="drug">Imipenem (IPM)</td><td class="v S">S</td><td class="v S">S</td><td class="v S">S</td><td class="v S">S</td><td class="v R">R</td></tr>
+      <tr><td class="drug">Meropenem (MEM)</td><td class="v S">S</td><td class="v S">S</td><td class="v S">S</td><td class="v S">S</td><td class="v R">R</td></tr>
+      <tr class="grp"><td colspan="6">胺基醣苷 AMINOGLYCOSIDES</td></tr>
+      <tr><td class="drug">Gentamicin (CN)</td><td class="v S">S</td><td class="v R">R</td><td class="v S">S</td><td class="v S">S</td><td class="v R">R</td></tr>
+      <tr><td class="drug">Neomycin (NE)</td><td class="v S">S</td><td class="v R">R</td><td class="v S">S</td><td class="v S">S</td><td class="v n">·</td></tr>
+      <tr class="grp"><td colspan="6">氟喹諾酮 FLUOROQUINOLONES</td></tr>
+      <tr><td class="drug">Ciprofloxacin (CIP)</td><td class="v S">S</td><td class="v S">S</td><td class="v S">S</td><td class="v S">S</td><td class="v S">S</td></tr>
+      <tr><td class="drug">Enrofloxacin (ENR)</td><td class="v S">S</td><td class="v S">S</td><td class="v S">S</td><td class="v S">S</td><td class="v S">S</td></tr>
+      <tr><td class="drug">Levofloxacin (LEV)</td><td class="v S">S</td><td class="v n">·</td><td class="v n">·</td><td class="v n">·</td><td class="v n">·</td></tr>
+      <tr class="grp"><td colspan="6">四環黴素 TETRACYCLINES</td></tr>
+      <tr><td class="drug">Doxycycline (DO)</td><td class="v S">S</td><td class="v R">R</td><td class="v S">S</td><td class="v S">S</td><td class="v R">R</td></tr>
+      <tr><td class="drug">Minocycline (MH)</td><td class="v S">S</td><td class="v S">S</td><td class="v S">S</td><td class="v n">·</td><td class="v S">S</td></tr>
+      <tr class="grp"><td colspan="6">巨環內酯・林可醯胺 MACROLIDES / LINCOSAMIDES</td></tr>
+      <tr><td class="drug">Azithromycin (AZM)</td><td class="v I">I</td><td class="v R">R</td><td class="v S">S</td><td class="v n">·</td><td class="v R">R</td></tr>
+      <tr><td class="drug">Clindamycin (DA)</td><td class="v I">I</td><td class="v R">R</td><td class="v S">S</td><td class="v R">R</td><td class="v R">R</td></tr>
+      <tr class="grp"><td colspan="6">其他 OTHERS</td></tr>
+      <tr><td class="drug">TMP/SMX (Co-trim)</td><td class="v S">S</td><td class="v R">R</td><td class="v R">R</td><td class="v R">R</td><td class="v R">R</td></tr>
+      <tr><td class="drug">Polymyxin B (PB)</td><td class="v n">·</td><td class="v R">R</td><td class="v R">R</td><td class="v S">S</td><td class="v n">·</td></tr>
+      <tr><td class="drug">Fusidic acid (FC)</td><td class="v S">S</td><td class="v S">S</td><td class="v S">S</td><td class="v R">R</td><td class="v S">S</td></tr>
+      <tr><td class="drug">Florfenicol</td><td class="v n">·</td><td class="v S">S</td><td class="v S">S</td><td class="v S">S</td><td class="v n">·</td></tr>
+      <tr><td class="drug">Mupirocin (MUP)</td><td class="v S">S</td><td class="v n">·</td><td class="v n">·</td><td class="v n">·</td><td class="v n">·</td></tr>
+      <tr><td class="drug">Linezolid (LZD)</td><td class="v n">·</td><td class="v n">·</td><td class="v n">·</td><td class="v n">·</td><td class="v S">S</td></tr>
+      <tr><td class="drug">Metronidazole (MTZ)</td><td class="v R">R</td><td class="v R">R</td><td class="v R">R</td><td class="v R">R</td><td class="v R">R</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="lgd"><i><b style="background:var(--green-bg);color:var(--green-tx);">S</b>敏感</i><i><b style="background:var(--amber-bg);color:var(--amber-tx);">I</b>中間</i><i><b style="background:var(--red-bg);color:var(--red-tx);">R</b>抗藥</i><i><b style="background:#fcfdfe;color:#cdd5e0;border:1px solid var(--line);">·</b>未測</i></div>
+</div>
 <div class="foot">耳道／中耳病例比較表　·　資料整理於 2026.07.17　·　細菌培養更新 2026.07.30</div>
 </div>
 </body>
