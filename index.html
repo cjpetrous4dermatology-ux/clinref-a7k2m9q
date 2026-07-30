@@ -44,6 +44,14 @@
   td .sub{color:var(--muted);font-size:13px;}
   .em{font-style:italic;}
   .dash{color:var(--muted);font-size:16px;}
+  .abx{margin-top:8px;font-size:12.5px;line-height:1.65;}
+  .abx > div{margin-top:4px;padding-left:22px;text-indent:-22px;}
+  .abx .sr{display:inline-block;width:16px;text-align:center;border-radius:4px;
+    font-weight:700;font-size:11.5px;margin-right:6px;text-indent:0;}
+  .abx .s{background:var(--green-bg);color:var(--green-tx);}
+  .abx .i{background:var(--amber-bg);color:var(--amber-tx);}
+  .abx .r{background:var(--red-bg);color:var(--red-tx);}
+  .abx .iso{font-weight:700;color:var(--navy);font-size:12.5px;margin-top:9px;text-indent:0;padding-left:0;}
   .badge{display:inline-block;padding:3px 10px;border-radius:6px;font-size:13px;font-weight:700;margin-top:8px;line-height:1.5;}
   .b-red{background:var(--red-bg);color:var(--red-tx);}
   .b-amber{background:var(--amber-bg);color:var(--amber-tx);}
@@ -115,9 +123,42 @@
     <tr>
       <td class="label">細菌培養</td>
       <td>
-        <div class="line">2026.05.17 右耳 (3+)<br><span class="em">Staphylococcus pseudintermedius</span></div>
+        <div class="line sub" style="margin-bottom:4px;">2026.05.17　右耳</div>
+        <div class="line">(3+) <span class="em">Staphylococcus pseudintermedius</span></div>
+
+        <div class="line sub" style="margin:12px 0 4px;">2026.07.28 送檢／07.30 完成　左耳中耳液體</div>
+        <div class="line">抹片：Gram stain — no organism seen<br>培養：(1+) <span class="em">Staphylococcus</span> sp.（coagulase-negative）</div>
+        <div class="badges">
+          <span class="badge b-green">Oxacillin S ＋ Cefoxitin S</span>
+          <span class="badge b-blue">單一菌落型態・少量生長</span>
+        </div>
+        <div class="abx">
+          <div class="iso">(a) <span class="em">Staphylococcus</span> sp.（coagulase-negative）</div>
+          <div><span class="sr s">S</span>Oxacillin、Cefoxitin、Amoxicillin/Clavulanate、Cefazolin、Cephalexin、Cefadroxil、Cefovecin、Imipenem、Meropenem、Gentamicin、Neomycin、Ciprofloxacin、Enrofloxacin、Levofloxacin、Doxycycline、Minocycline、TMP/SMX、Mupirocin、Fusidic acid</div>
+          <div><span class="sr i">I</span>Azithromycin、Clindamycin</div>
+          <div><span class="sr r">R</span>Penicillin、Ampicillin/Amoxicillin、Ceftazidime、Cefixime、Metronidazole</div>
+        </div>
+        <div class="line sub" style="margin-top:8px;">中興大學動醫中心 RCAM-26-20759</div>
       </td>
-      <td><div class="dash">—</div></td>
+      <td>
+        <div class="line sub" style="margin-bottom:4px;">2026.07.28 送檢／07.30 完成</div>
+        <div class="line"><b>(1) 左耳中耳抽出液</b><br>抹片：(3+) gram (+) cocci<br>培養：(4+) <span class="em">Staphylococcus pseudintermedius</span></div>
+        <div class="line" style="margin-top:8px;"><b>(2) 右耳中耳抽出液</b><br>抹片：(3+) gram (+) cocci ＋ (3+) gram (+) bacilli<br>培養：(4+) <span class="em">Staphylococcus pseudintermedius</span> ＋ (4+) <span class="em">Corynebacterium</span> sp.</div>
+        <div class="badges">
+          <span class="badge b-red">雙耳中耳 4+ 大量生長</span>
+          <span class="badge b-amber">右耳雙重感染</span>
+          <span class="badge b-green">Oxacillin S</span>
+        </div>
+        <div class="abx">
+          <div class="iso">(a) <span class="em">Staphylococcus pseudintermedius</span></div>
+          <div><span class="sr s">S</span>Oxacillin、Amoxicillin/Clavulanate、Cefazolin、Cephalexin、Cefadroxil、Cefovecin、Imipenem、Meropenem、Ciprofloxacin、Enrofloxacin、Minocycline、Fusidic acid、Florfenicol</div>
+          <div><span class="sr r">R</span>Penicillin、Ampicillin/Amoxicillin、Gentamicin、Neomycin、Cefixime、Polymyxin B、Doxycycline、Azithromycin、TMP/SMX、Clindamycin、Metronidazole</div>
+          <div class="iso">(b) <span class="em">Corynebacterium</span> sp.</div>
+          <div><span class="sr s">S</span>Penicillin、Ampicillin/Amoxicillin、Amoxicillin/Clavulanate、Cefazolin、Cephalexin、Cefadroxil、Cefovecin、Imipenem、Meropenem、Gentamicin、Neomycin、Ciprofloxacin、Enrofloxacin、Doxycycline、Minocycline、Azithromycin、Clindamycin、Fusidic acid、Florfenicol</div>
+          <div><span class="sr r">R</span>Cefixime、Polymyxin B、TMP/SMX、Metronidazole</div>
+        </div>
+        <div class="line sub" style="margin-top:8px;">中興大學動醫中心 RCAM-26-20752</div>
+      </td>
       <td><div class="dash">—</div></td>
     </tr>
     <!-- 耳鏡 VOS -->
