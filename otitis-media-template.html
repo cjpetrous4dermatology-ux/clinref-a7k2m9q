@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>中耳炎病例整理表（術前・手術・術後）</title>
+<style>
+  :root{
+    --navy:#122647;--line:#e5e9f0;--label-bg:#f0f3f8;--zebra:#f7f9fc;
+    --ink:#1f2a3a;--muted:#8a93a3;
+    --red-bg:#fde2e4;--red-tx:#b3243b;
+    --amber-bg:#fdecc8;--amber-tx:#8a5a00;
+    --green-bg:#d7f0dd;--green-tx:#1c7a3e;
+    --purple-bg:#ece3fb;--purple-tx:#6b3fc0;
+    --blue-bg:#dbeafe;--blue-tx:#1e5fbf;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:0 0 60px;background:#eef1f6;color:var(--ink);
+    font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 16px;}
+
+  /* 工具列 */
+  .bar{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff;
+    padding:10px 16px;box-shadow:0 2px 10px rgba(18,38,71,.18);}
+  .bar-in{max-width:1080px;margin:0 auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  .bar .ttl{font-size:15px;font-weight:700;letter-spacing:.5px;margin-right:6px;}
+  .bar select{font:inherit;font-size:13px;padding:6px 10px;border-radius:7px;border:1px solid #33507d;
+    background:#1d3a63;color:#fff;max-width:230px;}
+  .btn{font:inherit;font-size:13px;padding:6px 12px;border-radius:7px;cursor:pointer;
+    border:1px solid #33507d;background:#1d3a63;color:#fff;}
+  .btn:hover{background:#28497a;}
+  .btn.hi{background:#1e5fbf;border-color:#1e5fbf;}
+  .btn.hi:hover{background:#2a6fd6;}
+  .btn.dg{border-color:#6b2233;background:#7a2438;}
+  .saved{font-size:12px;color:#a9b7cf;margin-left:auto;}
+
+  /* 標題 */
+  .head{background:#fff;border-radius:14px;margin-top:18px;padding:20px 22px 6px;
+    box-shadow:0 6px 28px rgba(18,38,71,.10);}
+  .head h1{margin:0 0 4px;font-size:21px;color:var(--navy);letter-spacing:.5px;}
+  .head .sub{font-size:12.5px;color:var(--muted);line-height:1.7;margin-bottom:14px;}
+
+  /* 區塊 */
+  .sec{margin-top:0;}
+  .sec-title{font-size:15px;font-weight:700;color:var(--navy);letter-spacing:.5px;
+    padding:10px 0 8px;border-bottom:2px solid var(--navy);margin-bottom:2px;}
+  .f-row{display:grid;grid-template-columns:184px 1fr;gap:0;border-bottom:1px solid var(--line);}
+  .f-row:last-child{border-bottom:none;}
+  .f-lab{background:var(--label-bg);padding:11px 12px;font-size:13.5px;font-weight:700;
+    color:var(--navy);border-right:1px solid var(--line);}
+  .f-hint{display:block;font-weight:400;color:var(--muted);font-size:11.5px;line-height:1.5;margin-top:3px;}
+  .f-val{padding:10px 12px;display:flex;flex-wrap:wrap;gap:7px 14px;align-items:center;}
+  .f-val .br{flex-basis:100%;height:0;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;}
+  .grid2 .f-row:nth-last-child(2){border-bottom:1px solid var(--line);}
+
+  /* 表單元件 */
+  label.ck{display:inline-flex;align-items:center;gap:5px;font-size:13px;cursor:pointer;
+    padding:3px 9px;border:1px solid var(--line);border-radius:20px;background:#fff;
+    -webkit-user-select:none;user-select:none;}
+  label.ck:hover{border-color:#b9c4d6;}
+  label.ck input{margin:0;accent-color:#1e5fbf;width:15px;height:15px;}
+  label.ck.okck input{accent-color:#1c7a3e;}
+  label.ck.warnck input{accent-color:#8a5a00;}
+  label.ck.badck input{accent-color:#b3243b;}
+  label.ck:has(input:checked){background:var(--blue-bg);border-color:#9dc0f2;color:#154a99;font-weight:600;}
+  label.ck.warnck:has(input:checked){background:var(--amber-bg);border-color:#e6c37a;color:var(--amber-tx);}
+  label.ck.okck:has(input:checked){background:var(--green-bg);border-color:#a8d9b8;color:var(--green-tx);}
+  label.ck.badck:has(input:checked){background:var(--red-bg);border-color:#f0b3bd;color:var(--red-tx);}
+  .ti{font:inherit;font-size:13px;padding:5px 8px;border:none;border-bottom:1.5px dotted #c2ccdb;
+    background:transparent;color:var(--ink);min-width:120px;flex:1 1 160px;}
+  .ti:focus{outline:none;border-bottom:1.5px solid #1e5fbf;background:#f6faff;}
+  .ti.w{flex:1 1 100%;}
+  .ti.s{flex:0 0 130px;min-width:120px;}
+  .ti::placeholder{color:#b6c0ce;}
+  textarea.ta{font:inherit;font-size:13px;line-height:1.7;width:100%;min-height:64px;padding:8px 10px;
+    border:1px solid var(--line);border-radius:8px;background:#fcfdff;resize:vertical;color:var(--ink);}
+  textarea.ta:focus{outline:none;border-color:#1e5fbf;background:#f6faff;}
+  .tag{font-size:11.5px;color:var(--muted);}
+
+  /* 時間軸 */
+  .rail{position:relative;margin:20px 0 0;padding-left:34px;}
+  .rail:before{content:"";position:absolute;left:13px;top:10px;bottom:10px;width:3px;
+    background:linear-gradient(#1e5fbf,#6b3fc0 50%,#1c7a3e);border-radius:2px;}
+  .stage{position:relative;margin-bottom:20px;border:1px solid var(--line);border-radius:12px;background:#fff;
+    box-shadow:0 4px 18px rgba(18,38,71,.07);}
+  .stage .node{position:absolute;left:-34px;top:13px;width:29px;height:29px;border-radius:50%;
+    color:#fff;font-size:14px;font-weight:700;line-height:29px;text-align:center;box-shadow:0 0 0 4px #eef1f6;}
+  .s-pre  .node{background:#1e5fbf;} .s-pre  .stage-hd{background:#e8f0fe;border-left:5px solid #1e5fbf;}
+  .s-op   .node{background:#6b3fc0;} .s-op   .stage-hd{background:#f1ebfd;border-left:5px solid #6b3fc0;}
+  .s-post .node{background:#1c7a3e;} .s-post .stage-hd{background:#e4f4e9;border-left:5px solid #1c7a3e;}
+  .stage-hd{border-radius:11px 11px 0 0;padding:11px 16px;display:flex;align-items:baseline;
+    gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);}
+  .stage-tag{font-size:16px;font-weight:700;color:var(--navy);letter-spacing:.5px;}
+  .stage-note{font-size:12px;color:#6b7688;}
+  .stage-bd{padding:2px 16px 14px;}
+
+  .warn{display:flex;gap:10px;align-items:flex-start;margin:14px 0 6px;padding:11px 13px;
+    background:var(--amber-bg);border:1px solid #f0d59a;border-radius:9px;
+    font-size:12.5px;line-height:1.75;color:#7a4f00;}
+  .warn .ic{font-size:15px;line-height:1.6;}
+  .warn b{color:var(--amber-tx);}
+
+  /* 術後追蹤區塊 */
+  .fup{border:1px solid var(--line);border-radius:10px;margin:14px 0;overflow:hidden;}
+  .fup-hd{background:var(--zebra);padding:8px 12px;display:flex;align-items:center;gap:10px;
+    border-bottom:1px solid var(--line);}
+  .fup-hd .tp{font:inherit;font-size:13.5px;font-weight:700;color:var(--navy);border:none;
+    background:transparent;padding:3px 6px;border-radius:6px;width:150px;}
+  .fup-hd .tp:focus{outline:none;background:#fff;box-shadow:0 0 0 2px #9dc0f2;}
+  .fup-hd .rm{margin-left:auto;font-size:12px;padding:3px 10px;border-radius:6px;cursor:pointer;
+    border:1px solid var(--line);background:#fff;color:var(--muted);}
+  .fup-hd .rm:hover{border-color:#f0b3bd;color:var(--red-tx);}
+  .addfup{font:inherit;font-size:13px;padding:7px 14px;border-radius:8px;cursor:pointer;
+    border:1px dashed #b9c4d6;background:#f7f9fc;color:#5f6b7e;width:100%;}
+  .addfup:hover{border-color:#1e5fbf;color:#1e5fbf;}
+
+  .foot{max-width:1080px;margin:22px auto 0;padding:0 16px;font-size:11.5px;color:#9aa5b6;line-height:1.8;}
+
+  @media (max-width:720px){
+    .f-row{grid-template-columns:1fr;}
+    .f-lab{border-right:none;border-bottom:1px solid var(--line);}
+    .grid2{grid-template-columns:1fr;}
+  }
+
+  /* 列印 */
+  @media print{
+    body{background:#fff;padding:0;}
+    .bar,.addfup,.fup-hd .rm,.noprint{display:none !important;}
+    .head,.stage{box-shadow:none;}
+    .wrap{max-width:none;padding:0;}
+    .stage{break-inside:avoid;page-break-inside:avoid;}
+    .fup{break-inside:avoid;page-break-inside:avoid;}
+    .ti{border-bottom:1px solid #c2ccdb;}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="bar-in">
+    <span class="ttl">中耳炎病例整理表</span>
+    <select id="caseSel" title="切換病例"></select>
+    <button class="btn hi" id="btnNew">＋ 新增病例</button>
+    <button class="btn" id="btnDup">複製此病例</button>
+    <button class="btn" id="btnTxt">複製成文字</button>
+    <button class="btn" id="btnPrint">列印 / 存 PDF</button>
+    <button class="btn dg" id="btnDel">刪除</button>
+    <span class="saved" id="saved">—</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="head">
+    <h1>中耳炎病例整理表</h1>
+    <div class="sub">術前評估 → 手術紀錄 → 術後追蹤　·　填寫內容<b>只存在這台裝置的瀏覽器裡</b>，不會上傳，換裝置看不到。</div>
+    <div class="sec">
+      <div class="sec-title">病例基本資料</div>
+      <div class="grid2">
+        <div class="f-row"><div class="f-lab">病患名稱</div><div class="f-val"><input class="ti" data-f="base.name" placeholder="例：小白"></div></div>
+        <div class="f-row"><div class="f-lab">病歷號</div><div class="f-val"><input class="ti" data-f="base.no" placeholder="例：005407"></div></div>
+        <div class="f-row"><div class="f-lab">品種</div><div class="f-val"><input class="ti" data-f="base.breed" placeholder="例：法國鬥牛犬"></div></div>
+        <div class="f-row"><div class="f-lab">年齡・性別</div><div class="f-val"><input class="ti" data-f="base.agesex" placeholder="例：5yr FS"></div></div>
+        <div class="f-row"><div class="f-lab">體重</div><div class="f-val"><input class="ti" data-f="base.bw" placeholder="kg"></div></div>
+        <div class="f-row"><div class="f-lab">飼主</div><div class="f-val"><input class="ti" data-f="base.owner"></div></div>
+        <div class="f-row"><div class="f-lab">主訴・病史</div><div class="f-val"><textarea class="ta" data-f="base.cc" placeholder="發病時間、外院用藥、慢性病史⋯"></textarea></div></div>
+        <div class="f-row"><div class="f-lab">主治醫師・建檔日期</div><div class="f-val"><input class="ti s" data-f="base.vet" placeholder="醫師"><input class="ti s" type="date" data-f="base.date"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rail">
+
+    <!-- ① 術前評估 -->
+    <section class="stage s-pre">
+      <div class="node">1</div>
+      <div class="stage-hd">
+        <span class="stage-tag">術前評估</span>
+        <span class="stage-note">麻醉前完成，並與飼主說明風險</span>
+      </div>
+      <div class="stage-bd">
+        <div class="warn"><span class="ic">⚠️</span><div><b>術前務必告知飼主：</b>若病患同時合併<b>上呼吸道感染</b>（鼻涕、咳嗽、鼻腔病灶），中耳與鼻咽經<b>耳咽管</b>相通，感染源會持續回流至中耳，<b>可能影響中耳炎的手術預後</b>、增加復發與再次手術的機會，術後也可能需要更長期的抗生素與追蹤。</div></div>
+        <div class="sec">
+          <div class="f-row">
+            <div class="f-lab">評估日期</div>
+            <div class="f-val"><input class="ti s" type="date" data-f="pre.date"></div>
+          </div>
+          <div class="f-row">
+            <div class="f-lab">聽力<span class="f-hint">拍手／呼名反應、飼主觀察</span></div>
+            <div class="f-val">
+              <label class="ck okck"><input type="radio" data-f="pre.hear" value="正常"><span>正常</span></label>
+              <label class="ck badck"><input type="radio" data-f="pre.hear" value="異常"><span>異常</span></label>
+              <label class="ck"><input type="radio" data-f="pre.hear" value="未評估"><span>未評估</span></label>
+              <input class="ti" data-f="pre.hear.note" placeholder="左／右、程度、評估方式">
+            </div>
+          </div>
+          <div class="f-row">
+            <div class="f-lab">神經症狀 — 歪頭</div>
+            <div class="f-val">
+              <label class="ck okck"><input type="radio" data-f="pre.tilt" value="無"><span>無</span></label>
+              <label class="ck badck"><input type="radio" data-f="pre.tilt" value="有"><span>有</span></label>
+              <input class="ti" data-f="pre.tilt.note" placeholder="方向、出現多久、程度">
+            </div>
+          </div>
+          <div class="f-row">
+            <div class="f-lab">神經症狀 — 瞳孔</div>
+            <div class="f-val">
+              <label class="ck okck"><input type="radio" data-f="pre.pupil" value="等大"><span>等大</span></label>
+              <label class="ck badck"><input type="radio" data-f="pre.pupil" value="不等大"><span>不等大</span></label>
+              <input class="ti" data-f="pre.pupil.note" placeholder="哪一側縮小／放大、對光反應">
+            </div>
+          </div>
+          <div class="f-row">
+            <div class="f-lab">神經症狀 — 其他<span class="f-hint">中耳／內耳受侵犯的指標</span></div>
+            <div class="f-val">
+              <label class="ck badck"><input type="checkbox" data-f="pre.n.nystag"><span>眼球震顫</span></label>
+              <label class="ck badck"><input type="checkbox" data-f="pre.n.facial"><span>面神經麻痺</span></label>
+              <label class="ck badck"><input type="checkbox" data-f="pre.n.horner"><span>霍納氏症</span></label>
+              <label class="ck badck"><input type="checkbox" data-f="pre.n.ataxia"><span>共濟失調</span></label>
+              <label class="ck badck"><input type="checkbox" data-f="pre.n.circle"><span>轉圈</span></label>
+              <label class="ck okck"><input type="checkbox" data-f="pre.n.none"><span>皆無</span></label>
+              <input class="ti w" data-f="pre.n.note" placeholder="補充說明">
+            </div>
+          </div>
+          <div class="f-row">
+            <div class="f-lab">呼吸道症狀<span class="f-hint">影響預後的關鍵項目</span></div>
+            <div class="f-val">
+              <label class="ck badck"><input type="checkbox" data-f="pre.r.nasal"><span>鼻涕</span></label>
+              <label class="ck badck"><input type="checkbox" data-f="pre.r.cough"><span>咳嗽</span></label>
+              <label class="ck badck"><input type="checkbox" data-f="pre.r.sneeze"><span>打噴嚏</span></label>
+              <label class="ck badck"><input type="checkbox" data-f="pre.r.stertor"><span>呼吸雜音</span></label>
+              <label class="ck okck"><input type="checkbox" data-f="pre.r.none"><span>皆無</span></label>
+              <input class="ti w" data-f="pre.r.note" placeholder="性狀（漿液／膿樣）、單側或雙側、持續多久、胸腔影像">
+            </div>
+          </div>
+          <div class="f-row">
+            <div class="f-lab">結膜炎</div>
+            <div class="f-val">
+              <label class="ck okck"><input type="radio" data-f="pre.conj" value="無"><span>無</span></label>
+              <label class="ck badck"><input type="radio" data-f="pre.conj" value="有"><span>有</span></label>
+              <label class="ck"><input type="checkbox" data-f="pre.conj.L"><span>左</span></label>
+              <label class="ck"><input type="checkbox" data-f="pre.conj.R"><span>右</span></label>
+              <span class="tag">鼻淚管</span>
+              <label class="ck okck"><input type="radio" data-f="pre.nld" value="通暢"><span>通暢</span></label>
+              <label class="ck badck"><input type="radio" data-f="pre.nld" value="阻塞"><span>阻塞</span></label>
+              <label class="ck"><input type="radio" data-f="pre.nld" value="未測"><span>未測</span></label>
+              <input class="ti w" data-f="pre.conj.note" placeholder="分泌物性狀、是否曾通鼻淚管">
+            </div>
+          </div>
+          <div class="f-row">
+            <div class="f-lab">疫苗紀錄</div>
+            <div class="f-val">
+              <label class="ck okck"><input type="radio" data-f="pre.vac" value="完整"><span>完整</span></label>
+              <label class="ck warnck"><input type="radio" data-f="pre.vac" value="不完整"><span>不完整</span></label>
+              <label class="ck"><input type="radio" data-f="pre.vac" value="不明"><span>不明</span></label>
+              <input class="ti" data-f="pre.vac.note" placeholder="最近接種日期與品項（DHPP／FVRCP／狂犬）">
+            </div>
+          </div>
+          <div class="f-row">
+            <div class="f-lab">電腦斷層 CT<span class="f-hint">若波及鼻腔 → 手術中須加排鼻腔鏡＋盥洗</span></div>
+            <div class="f-val">
+              <input class="ti s" type="date" data-f="pre.ct.date">
+              <span class="tag">鼻腔是否受影響</span>
+              <label class="ck okck"><input type="radio" data-f="pre.ct.nasal" value="否"><span>否</span></label>
+              <label class="ck badck"><input type="radio" data-f="pre.ct.nasal" value="是"><span>是</span></label>
+              <label class="ck"><input type="radio" data-f="pre.ct.nasal" value="未評估"><span>未評估</span></label>
+              <div class="br"></div>
+              <span class="tag">若「是」→ 術中安排</span>
+              <label class="ck warnck"><input type="checkbox" data-f="pre.ct.scope"><span>鼻腔鏡檢查</span></label>
+              <label class="ck warnck"><input type="checkbox" data-f="pre.ct.lavage"><span>鼻腔盥洗</span></label>
+              <textarea class="ta" data-f="pre.ct.note" placeholder="中耳／鼓室泡所見、耳道狀況、鼻腔與鼻甲骨、淋巴結、胸腔⋯"></textarea>
+            </div>
+          </div>
+          <div class="f-row">
+            <div class="f-lab">咽喉部軟式內視鏡<span class="f-hint">評估耳咽管開口</span></div>
+            <div class="f-val">
+              <input class="ti s" type="date" data-f="pre.scope.date">
+              <div class="br"></div>
+              <span class="tag">左耳咽管開口</span>
+              <label class="ck okck"><input type="checkbox" data-f="pre.et.L.open"><span>通暢</span></label>
+              <label class="ck badck"><input type="checkbox" data-f="pre.et.L.block"><span>阻塞</span></label>
+              <label class="ck warnck"><input type="checkbox" data-f="pre.et.L.dis"><span>分泌物</span></label>
+              <label class="ck badck"><input type="checkbox" data-f="pre.et.L.polyp"><span>息肉</span></label>
+              <div class="br"></div>
+              <span class="tag">右耳咽管開口</span>
+              <label class="ck okck"><input type="checkbox" data-f="pre.et.R.open"><span>通暢</span></label>
+              <label class="ck badck"><input type="checkbox" data-f="pre.et.R.block"><span>阻塞</span></label>
+              <label class="ck warnck"><input type="checkbox" data-f="pre.et.R.dis"><span>分泌物</span></label>
+              <label class="ck badck"><input type="checkbox" data-f="pre.et.R.polyp"><span>息肉</span></label>
+              <textarea class="ta" data-f="pre.scope.note" placeholder="鼻咽、後鼻孔、軟顎所見"></textarea>
+            </div>
+          </div>
+          <div class="f-row">
+            <div class="f-lab">其他術前資料</div>
+            <div class="f-val">
+              <input class="ti" data-f="pre.blood" placeholder="血液檢查（CBC／Chem／甲狀腺⋯）">
+              <input class="ti" data-f="pre.anes" placeholder="麻醉風險評估／ASA 分級">
+              <input class="ti w" data-f="pre.med" placeholder="目前用藥與劑量">
+              <span class="tag">停抗生素日期（利於術中採樣培養）</span>
+              <input class="ti s" type="date" data-f="pre.abxstop">
+            </div>
+          </div>
+          <div class="f-row">
+            <div class="f-lab">飼主告知紀錄</div>
+            <div class="f-val">
+              <label class="ck warnck"><input type="checkbox" data-f="pre.inform"><span>已告知：合併呼吸道感染可能影響中耳炎預後</span></label>
+              <input class="ti s" type="date" data-f="pre.inform.date">
+              <input class="ti w" data-f="pre.inform.note" placeholder="其他告知事項、飼主決定">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ② 手術紀錄 -->
+    <section class="stage s-op">
+      <div class="node">2</div>
+      <div class="stage-hd">
+        <span class="stage-tag">手術紀錄</span>
+        <span class="stage-note">術中所見與採樣</span>
+      </div>
+      <div class="stage-bd">
+        <div class="sec">
+          <div class="f-row">
+            <div class="f-lab">手術日期・術式</div>
+            <div class="f-val">
+              <input class="ti s" type="date" data-f="op.date">
+              <input class="ti" data-f="op.proc" placeholder="術式（TECA-LBO／VBO／耳道鏡盥洗／鼓室切開⋯）">
+              <input class="ti s" data-f="op.surgeon" placeholder="執刀醫師">
+            </div>
+          </div>
+          <div class="f-row">
+            <div class="f-lab">耳膜是否破裂 — 左耳</div>
+            <div class="f-val">
+              <label class="ck okck"><input type="radio" data-f="op.tm.L" value="完整"><span>完整</span></label>
+              <label class="ck warnck"><input type="radio" data-f="op.tm.L" value="膨出"><span>膨出</span></label>
+              <label class="ck badck"><input type="radio" data-f="op.tm.L" value="破裂／穿孔"><span>破裂／穿孔</span></label>
+              <label class="ck"><input type="radio" data-f="op.tm.L" value="無法辨識"><span>無法辨識</span></label>
+              <label class="ck"><input type="radio" data-f="op.tm.L" value="未處理"><span>未處理</span></label>
+              <input class="ti" data-f="op.tm.L.note" placeholder="破口位置、大小、是否人工切開">
+            </div>
+          </div>
+          <div class="f-row">
+            <div class="f-lab">耳膜是否破裂 — 右耳</div>
+            <div class="f-val">
+              <label class="ck okck"><input type="radio" data-f="op.tm.R" value="完整"><span>完整</span></label>
+              <label class="ck warnck"><input type="radio" data-f="op.tm.R" value="膨出"><span>膨出</span></label>
+              <label class="ck badck"><input type="radio" data-f="op.tm.R" value="破裂／穿孔"><span>破裂／穿孔</span></label>
+              <label class="ck"><input type="radio" data-f="op.tm.R" value="無法辨識"><span>無法辨識</span></label>
+              <label class="ck"><input type="radio" data-f="op.tm.R" value="未處理"><span>未處理</span></label>
+              <input class="ti" data-f="op.tm.R.note" placeholder="破口位置、大小、是否人工切開">
+            </div>
+          </div>
+          <div class="f-row">
+            <div class="f-lab">中耳狀況 — 左耳<span class="f-hint">有無黏液、內容物性質</span></div>
+            <div class="f-val">
+              <label class="ck okck"><input type="checkbox" data-f="op.m.L.clean"><span>乾淨無異常</span></label>
+              <label class="ck warnck"><input type="checkbox" data-f="op.m.L.mucus"><span>黏液</span></label>
+              <label class="ck warnck"><input type="checkbox" data-f="op.m.L.fluid"><span>漿液</span></label>
+              <label class="ck badck"><input type="checkbox" data-f="op.m.L.pus"><span>膿</span></label>
+              <label class="ck badck"><input type="checkbox" data-f="op.m.L.blood"><span>血樣</span></label>
+              <label class="ck badck"><input type="checkbox" data-f="op.m.L.polyp"><span>息肉／增生組織</span></label>
+              <input class="ti w" data-f="op.m.L.note" placeholder="量、顏色、黏稠度、黏膜增厚、骨質變化">
+            </div>
+          </div>
+          <div class="f-row">
+            <div class="f-lab">中耳狀況 — 右耳<span class="f-hint">有無黏液、內容物性質</span></div>
+            <div class="f-val">
+              <label class="ck okck"><input type="checkbox" data-f="op.m.R.clean"><span>乾淨無異常</span></label>
+              <label class="ck warnck"><input type="checkbox" data-f="op.m.R.mucus"><span>黏液</span></label>
+              <label class="ck warnck"><input type="checkbox" data-f="op.m.R.fluid"><span>漿液</span></label>
+              <label class="ck badck"><input type="checkbox" data-f="op.m.R.pus"><span>膿</span></label>
+              <label class="ck badck"><input type="checkbox" data-f="op.m.R.blood"><span>血樣</span></label>
+              <label class="ck badck"><input type="checkbox" data-f="op.m.R.polyp"><span>息肉／增生組織</span></label>
+              <input class="ti w" data-f="op.m.R.note" placeholder="量、顏色、黏稠度、黏膜增厚、骨質變化">
+            </div>
+          </div>
+          <div class="f-row">
+            <div class="f-lab">病理切片</div>
+            <div class="f-val">
+              <label class="ck"><input type="radio" data-f="op.path" value="未送檢"><span>未送檢</span></label>
+              <label class="ck okck"><input type="radio" data-f="op.path" value="已送檢"><span>已送檢</span></label>
+              <input class="ti s" data-f="op.path.site" placeholder="採樣部位">
+              <input class="ti s" data-f="op.path.lab" placeholder="送檢單位／編號">
+              <span class="tag">報告日</span><input class="ti s" type="date" data-f="op.path.rdate">
+              <textarea class="ta" data-f="op.path.result" placeholder="病理診斷（發炎性息肉／肉芽組織／腫瘤⋯）與描述"></textarea>
+            </div>
+          </div>
+          <div class="f-row">
+            <div class="f-lab">細菌培養結果<span class="f-hint">左右耳分別採樣送檢</span></div>
+            <div class="f-val">
+              <input class="ti s" data-f="op.cx.lab" placeholder="送檢單位／編號">
+              <span class="tag">送檢日</span><input class="ti s" type="date" data-f="op.cx.date">
+              <span class="tag">報告日</span><input class="ti s" type="date" data-f="op.cx.rdate">
+              <textarea class="ta" data-f="op.cx.L" placeholder="左中耳：抹片／菌種／生長量（例：抹片 (3+) gram(+) cocci；培養 (4+) S. pseudintermedius）"></textarea>
+              <textarea class="ta" data-f="op.cx.R" placeholder="右中耳：抹片／菌種／生長量"></textarea>
+              <textarea class="ta" data-f="op.cx.other" placeholder="其他檢體（鼻分泌物、耳道⋯）"></textarea>
+              <textarea class="ta" data-f="op.cx.abx" placeholder="藥敏重點：敏感（S）／抗藥（R）藥物、是否 MRSP、選定術後用藥"></textarea>
+            </div>
+          </div>
+          <div class="f-row">
+            <div class="f-lab">其他術中處置</div>
+            <div class="f-val">
+              <label class="ck"><input type="checkbox" data-f="op.x.nscope"><span>鼻腔鏡檢查</span></label>
+              <label class="ck"><input type="checkbox" data-f="op.x.nlav"><span>鼻腔盥洗</span></label>
+              <label class="ck"><input type="checkbox" data-f="op.x.elav"><span>耳道盥洗</span></label>
+              <label class="ck"><input type="checkbox" data-f="op.x.drain"><span>放置引流</span></label>
+              <label class="ck"><input type="checkbox" data-f="op.x.nld"><span>通鼻淚管</span></label>
+              <input class="ti w" data-f="op.x.note" placeholder="其他處置與所見">
+            </div>
+          </div>
+          <div class="f-row">
+            <div class="f-lab">術中併發症・備註</div>
+            <div class="f-val"><textarea class="ta" data-f="op.note" placeholder="麻醉狀況、出血、神經構造保留、手術時間⋯"></textarea></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ③ 術後追蹤 -->
+    <section class="stage s-post">
+      <div class="node">3</div>
+      <div class="stage-hd">
+        <span class="stage-tag">術後追蹤</span>
+        <span class="stage-note">重點：是否<b>新出現</b>神經症狀與呼吸道症狀（與術前基準比較）</span>
+      </div>
+      <div class="stage-bd">
+        <div id="fups"></div>
+        <button class="addfup noprint" id="btnAddFup">＋ 新增追蹤時間點</button>
+        <div class="sec" style="margin-top:14px;">
+          <div class="f-row">
+            <div class="f-lab">總結・預後評估</div>
+            <div class="f-val"><textarea class="ta" data-f="post.summary" placeholder="是否改善、是否復發、與術前呼吸道狀況的關聯、後續計畫"></textarea></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<div class="foot">
+  中耳炎病例整理表模板　·　資料只存在本機瀏覽器（localStorage），不會上傳到網路；清除瀏覽器資料會一併刪除，重要內容請「列印／存 PDF」或「複製成文字」貼回病歷系統保存。
+</div>
+
+<template id="fupTpl">
+  <div class="fup" data-i="__i__">
+    <div class="fup-hd">
+      <span class="tag">時間點</span>
+      <input class="tp" data-f="post.__i__.label" placeholder="例：術後 1 週">
+      <span class="tag">日期</span>
+      <input class="ti s" type="date" data-f="post.__i__.date">
+      <button class="rm noprint" type="button">移除</button>
+    </div>
+    <div class="sec">
+      <div class="f-row">
+        <div class="f-lab">是否出現神經症狀</div>
+        <div class="f-val">
+          <label class="ck okck"><input type="radio" data-f="post.__i__.neuro" value="無"><span>無</span></label>
+          <label class="ck badck"><input type="radio" data-f="post.__i__.neuro" value="有"><span>有</span></label>
+          <label class="ck badck"><input type="checkbox" data-f="post.__i__.n.tilt"><span>歪頭</span></label>
+          <label class="ck badck"><input type="checkbox" data-f="post.__i__.n.pupil"><span>瞳孔不等大</span></label>
+          <label class="ck badck"><input type="checkbox" data-f="post.__i__.n.nystag"><span>眼球震顫</span></label>
+          <label class="ck badck"><input type="checkbox" data-f="post.__i__.n.facial"><span>面神經麻痺</span></label>
+          <label class="ck badck"><input type="checkbox" data-f="post.__i__.n.horner"><span>霍納氏症</span></label>
+          <input class="ti w" data-f="post.__i__.n.note" placeholder="與術前比較：新出現／持續／改善">
+        </div>
+      </div>
+      <div class="f-row">
+        <div class="f-lab">是否出現呼吸道症狀</div>
+        <div class="f-val">
+          <label class="ck okck"><input type="radio" data-f="post.__i__.resp" value="無"><span>無</span></label>
+          <label class="ck badck"><input type="radio" data-f="post.__i__.resp" value="有"><span>有</span></label>
+          <label class="ck badck"><input type="checkbox" data-f="post.__i__.r.nasal"><span>鼻涕</span></label>
+          <label class="ck badck"><input type="checkbox" data-f="post.__i__.r.cough"><span>咳嗽</span></label>
+          <label class="ck badck"><input type="checkbox" data-f="post.__i__.r.sneeze"><span>打噴嚏</span></label>
+          <input class="ti w" data-f="post.__i__.r.note" placeholder="與術前比較：新出現／持續／改善">
+        </div>
+      </div>
+      <div class="f-row">
+        <div class="f-lab">聽力・傷口・食慾精神</div>
+        <div class="f-val"><input class="ti w" data-f="post.__i__.other" placeholder="聽力變化、傷口癒合、食慾精神、耳道分泌物"></div>
+      </div>
+      <div class="f-row">
+        <div class="f-lab">用藥・下次回診</div>
+        <div class="f-val"><input class="ti w" data-f="post.__i__.med" placeholder="抗生素（依藥敏）、類固醇、療程長度、下次回診安排"></div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+(function(){
+  "use strict";
+  var KEY="otm_cases_v1", CUR="otm_current_v1";
+  var DEFAULT_TP=["術後 24 小時","術後 1 週","術後 1 個月","術後 3 個月"];
+  var fups=document.getElementById("fups"), tpl=document.getElementById("fupTpl");
+  var sel=document.getElementById("caseSel"), savedEl=document.getElementById("saved");
+  var db, cur, nextI=1, loading=false, timer=null;
+
+  function readDB(){ try{ return JSON.parse(localStorage.getItem(KEY))||{}; }catch(e){ return {}; } }
+  function writeDB(){ localStorage.setItem(KEY, JSON.stringify(db)); }
+
+  /* ---- 追蹤時間點區塊 ---- */
+  function addFup(label, i){
+    var idx = (i==null) ? nextI++ : i;
+    if(idx>=nextI) nextI=idx+1;
+    var html=tpl.innerHTML.replace(/__i__/g,idx);
+    var d=document.createElement("div"); d.innerHTML=html.trim();
+    var node=d.firstChild;
+    fups.appendChild(node);
+    node.querySelector(".rm").addEventListener("click",function(){
+      if(!confirm("移除這個追蹤時間點？")) return;
+      node.remove(); save();
+    });
+    var lab=node.querySelector(".tp");
+    if(label) lab.value=label;
+    nameRadios(node);
+    return node;
+  }
+  function nameRadios(root){
+    root.querySelectorAll('input[type=radio][data-f]').forEach(function(r){ r.name=r.dataset.f; });
+  }
+
+  /* ---- 讀寫表單 ---- */
+  function readForm(){
+    var o={};
+    document.querySelectorAll("[data-f]").forEach(function(el){
+      var k=el.dataset.f;
+      if(el.type==="radio"){ if(el.checked) o[k]=el.value; }
+      else if(el.type==="checkbox"){ if(el.checked) o[k]=true; }
+      else if(el.value!=="") o[k]=el.value;
+    });
+    return o;
+  }
+  function writeForm(data){
+    document.querySelectorAll("[data-f]").forEach(function(el){
+      var v=data[el.dataset.f];
+      if(el.type==="radio") el.checked=(v===el.value);
+      else if(el.type==="checkbox") el.checked=!!v;
+      else el.value=(v==null?"":v);
+    });
+  }
+
+  /* ---- 病例管理 ---- */
+  function caseTitle(c){
+    var d=c.data||{};
+    var n=(d["base.name"]||"").trim(), no=(d["base.no"]||"").trim();
+    var t=n||"未命名病例";
+    if(no) t+=" ("+no+")";
+    return t;
+  }
+  function renderList(){
+    sel.innerHTML="";
+    var ids=Object.keys(db).sort(function(a,b){ return (db[a].created||0)-(db[b].created||0); });
+    ids.forEach(function(id){
+      var op=document.createElement("option");
+      op.value=id; op.textContent=caseTitle(db[id]);
+      if(id===cur) op.selected=true;
+      sel.appendChild(op);
+    });
+  }
+  function loadCase(id){
+    loading=true;
+    cur=id; localStorage.setItem(CUR,id);
+    var c=db[id]||{data:{}};
+    fups.innerHTML=""; nextI=1;
+    var idxs=[];
+    Object.keys(c.data||{}).forEach(function(k){
+      var m=/^post\.(\d+)\./.exec(k);
+      if(m && idxs.indexOf(+m[1])<0) idxs.push(+m[1]);
+    });
+    var data=c.data||{};
+    if(idxs.length){ idxs.sort(function(a,b){return a-b;}).forEach(function(i){ addFup(null,i); }); }
+    else { DEFAULT_TP.forEach(function(t,n){ addFup(null,n+1); data["post."+(n+1)+".label"]=t; }); }
+    writeForm(data);
+    renderList();
+    loading=false;
+    mark("已載入");
+  }
+  function newCase(data){
+    var id="c"+Date.now()+Math.floor(Math.random()*1000);
+    db[id]={created:Date.now(), data:data||{}};
+    writeDB(); loadCase(id);
+  }
+
+  /* ---- 存檔 ---- */
+  function mark(t){ savedEl.textContent=t; }
+  function save(){
+    if(loading||!cur) return;
+    if(!db[cur]) db[cur]={created:Date.now(),data:{}};
+    db[cur].data=readForm();
+    writeDB();
+    renderList();
+    var d=new Date();
+    mark("已自動存檔 "+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"));
+  }
+  function queueSave(){ clearTimeout(timer); mark("儲存中⋯"); timer=setTimeout(save,400); }
+  document.addEventListener("input",function(e){ if(e.target.dataset&&e.target.dataset.f) queueSave(); });
+  document.addEventListener("change",function(e){ if(e.target.dataset&&e.target.dataset.f) queueSave(); });
+
+  /* ---- 匯出文字 ---- */
+  function rowText(row){
+    var lab=row.querySelector(".f-lab").cloneNode(true);
+    var h=lab.querySelector(".f-hint"); if(h) h.remove();
+    var parts=[];
+    row.querySelectorAll(".f-val input, .f-val textarea").forEach(function(el){
+      if(el.type==="radio"){ if(el.checked) parts.push(el.value); }
+      else if(el.type==="checkbox"){ if(el.checked) parts.push(el.closest("label").textContent.trim()); }
+      else if(el.value.trim()!=="") parts.push(el.value.trim());
+    });
+    return "　" + lab.textContent.trim() + "：" + (parts.length?parts.join("・"):"—");
+  }
+  function toText(){
+    var L=[], t=caseTitle(db[cur]||{data:{}});
+    L.push("中耳炎病例整理表　"+t); L.push("");
+    document.querySelectorAll(".head .sec").forEach(function(s){
+      L.push("【病例基本資料】");
+      s.querySelectorAll(".f-row").forEach(function(r){ L.push(rowText(r)); });
+      L.push("");
+    });
+    document.querySelectorAll(".stage").forEach(function(st){
+      L.push("【"+st.querySelector(".stage-tag").textContent.trim()+"】");
+      st.querySelectorAll(".fup").forEach(function(f){
+        var lb=f.querySelector(".tp").value||"追蹤";
+        var dt=f.querySelector('input[type=date]').value;
+        L.push("・"+lb+(dt?"（"+dt+"）":""));
+        f.querySelectorAll(".f-row").forEach(function(r){ L.push(rowText(r)); });
+      });
+      st.querySelectorAll(".stage-bd > .sec > .f-row").forEach(function(r){ L.push(rowText(r)); });
+      L.push("");
+    });
+    return L.join("\n");
+  }
+
+  /* ---- 按鈕 ---- */
+  document.getElementById("btnAddFup").addEventListener("click",function(){ addFup("追蹤"); save(); });
+  sel.addEventListener("change",function(){ loadCase(sel.value); });
+  document.getElementById("btnNew").addEventListener("click",function(){ newCase(); });
+  document.getElementById("btnDup").addEventListener("click",function(){
+    var d=JSON.parse(JSON.stringify(readForm()));
+    d["base.name"]=(d["base.name"]||"")+"（複本）";
+    newCase(d);
+  });
+  document.getElementById("btnDel").addEventListener("click",function(){
+    if(!cur) return;
+    if(!confirm("確定刪除「"+caseTitle(db[cur])+"」？此動作無法復原。")) return;
+    delete db[cur]; writeDB();
+    var ids=Object.keys(db);
+    if(ids.length) loadCase(ids[0]); else newCase();
+  });
+  document.getElementById("btnPrint").addEventListener("click",function(){ window.print(); });
+  document.getElementById("btnTxt").addEventListener("click",function(){
+    var t=toText();
+    function done(){ mark("已複製到剪貼簿"); setTimeout(function(){ mark("已自動存檔"); },2500); }
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(done,function(){ fallback(t); });
+    } else fallback(t);
+    function fallback(txt){
+      var ta=document.createElement("textarea");
+      ta.value=txt; ta.style.position="fixed"; ta.style.opacity="0";
+      document.body.appendChild(ta); ta.select();
+      try{ document.execCommand("copy"); done(); }catch(e){ prompt("複製以下內容：",txt); }
+      ta.remove();
+    }
+  });
+
+  /* ---- 啟動 ---- */
+  nameRadios(document);
+  db=readDB();
+  var last=localStorage.getItem(CUR);
+  var ids=Object.keys(db);
+  if(ids.length) loadCase(db[last]?last:ids[0]);
+  else newCase();
+})();
+</script>
+</body>
+</html>
