@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>耳道／中耳手術排程評估</title>
+<style>
+  :root{
+    --navy:#122647;--line:#e5e9f0;--label-bg:#f0f3f8;--zebra:#f7f9fc;
+    --ink:#1f2a3a;--muted:#8a93a3;
+    --red-bg:#fde2e4;--red-tx:#b3243b;
+    --amber-bg:#fdecc8;--amber-tx:#8a5a00;
+    --green-bg:#d7f0dd;--green-tx:#1c7a3e;
+    --purple-bg:#ece3fb;--purple-tx:#6b3fc0;
+    --blue-bg:#dbeafe;--blue-tx:#1e5fbf;
+    --grey-bg:#eceff4;--grey-tx:#5f6b7e;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:26px 16px 60px;background:#eef1f6;color:var(--ink);
+    font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1120px;margin:0 auto;}
+  .head{background:#fff;border-radius:14px;padding:22px 24px;box-shadow:0 6px 28px rgba(18,38,71,.10);}
+  .head h1{margin:0 0 5px;font-size:22px;color:var(--navy);letter-spacing:.5px;}
+  .head .sub{font-size:12.5px;color:var(--muted);line-height:1.8;}
+  .bottleneck{margin-top:14px;padding:11px 14px;background:var(--amber-bg);border:1px solid #f0d59a;
+    border-radius:9px;font-size:13px;line-height:1.75;color:#7a4f00;}
+  .bottleneck b{color:var(--amber-tx);}
+
+  .mx-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  table.sum{width:100%;min-width:900px;border-collapse:collapse;background:#fff;margin-top:16px;
+    box-shadow:0 4px 18px rgba(18,38,71,.07);}
+  table.sum th{background:var(--navy);color:#fff;font-size:12.5px;font-weight:700;padding:10px 12px;
+    text-align:left;border:1px solid #2a4570;white-space:nowrap;}
+  table.sum td{border:1px solid var(--line);padding:10px 12px;font-size:13px;line-height:1.65;
+    vertical-align:top;}
+  table.sum tr:nth-child(even) td{background:var(--zebra);}
+  table.sum td.no{font-weight:700;color:var(--navy);white-space:nowrap;}
+  table.sum td.nm{font-weight:700;white-space:nowrap;}
+
+  .st{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700;
+    white-space:nowrap;}
+  .st1{background:var(--green-bg);color:var(--green-tx);}
+  .st2{background:var(--blue-bg);color:var(--blue-tx);}
+  .st3{background:var(--amber-bg);color:var(--amber-tx);}
+  .st4{background:var(--grey-bg);color:var(--grey-tx);}
+
+  .card{background:#fff;border-radius:13px;margin-top:18px;box-shadow:0 4px 18px rgba(18,38,71,.07);
+    border:1px solid var(--line);overflow:hidden;scroll-margin-top:14px;}
+  .card-hd{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;
+    align-items:baseline;gap:12px;flex-wrap:wrap;}
+  .c1 .card-hd{background:#e4f4e9;border-left:6px solid #1c7a3e;}
+  .c2 .card-hd{background:#e8f0fe;border-left:6px solid #1e5fbf;}
+  .c3 .card-hd{background:#fdf3e0;border-left:6px solid #d19a2a;}
+  .c4 .card-hd{background:#f1ebfd;border-left:6px solid #6b3fc0;}
+  .c5 .card-hd{background:#eef1f6;border-left:6px solid #8a93a3;}
+  .rank{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;
+    border-radius:50%;background:var(--navy);color:#fff;font-size:13px;font-weight:700;}
+  .pn{font-size:19px;font-weight:700;color:var(--navy);}
+  .pm{font-size:12.5px;color:#6b7688;}
+  .card-bd{padding:16px 18px;}
+  table.f{width:100%;border-collapse:collapse;}
+  table.f td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;font-size:13.5px;line-height:1.7;}
+  table.f td.k{background:var(--label-bg);font-weight:700;color:var(--navy);width:130px;white-space:nowrap;}
+  ul.t{margin:0;padding-left:18px;}
+  ul.t li{font-size:13.5px;line-height:1.75;margin:3px 0;}
+  .done{color:var(--green-tx);font-weight:700;}
+  .wait{color:var(--amber-tx);font-weight:700;}
+  .stop{color:var(--red-tx);font-weight:700;}
+  .sub{color:var(--muted);font-size:12.5px;font-weight:400;}
+  .warn{display:flex;gap:9px;align-items:flex-start;margin-top:12px;padding:11px 13px;
+    background:var(--red-bg);border:1px solid #f0b3bd;border-radius:9px;
+    font-size:12.5px;line-height:1.75;color:#8c1f34;}
+  .warn b{color:var(--red-tx);}
+  .note{display:flex;gap:9px;align-items:flex-start;margin-top:12px;padding:11px 13px;
+    background:var(--blue-bg);border:1px solid #9dc0f2;border-radius:9px;
+    font-size:12.5px;line-height:1.75;color:#154a99;}
+  .note b{color:#0f3d80;}
+  .fee{font-size:12.5px;color:#5a6577;line-height:1.9;background:var(--zebra);
+    border:1px solid var(--line);border-radius:8px;padding:10px 13px;margin-top:12px;}
+  .fee b{color:var(--navy);}
+  a.rec{display:inline-block;margin-top:12px;padding:7px 13px;border-radius:8px;background:var(--navy);
+    color:#fff;text-decoration:none;font-size:12.5px;font-weight:700;}
+  a.rec:hover{background:#1d3a63;}
+  .foot{max-width:1120px;margin:22px auto 0;font-size:11.5px;color:#9aa5b6;line-height:1.8;text-align:right;}
+  @media (max-width:760px){ table.f td.k{width:100px;} }
+  @media print{
+    body{background:#fff;padding:0;}
+    .head,.card,table.sum{box-shadow:none;}
+    .card{break-inside:avoid;page-break-inside:avoid;}
+    a.rec{display:none;}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="head">
+    <h1>耳道／中耳手術排程評估</h1>
+    <div class="sub">五個病例的目前進度、卡關點與下一步　·　依「距離可排刀的遠近」排序　·　資料整理於 2026.08.26</div>
+    <div class="bottleneck">⏳ <b>共同排程瓶頸：</b>主刀的<b>蕭醫師每月從日本來台三天，其中僅一～兩天能安排手術</b>。單耳內視鏡雷射手術<b>至少 3 小時起跳</b>，等於一個來台檔期通常只能排 1～2 台。CT 與術前評估要先完成，才卡得進檔期。</div>
+  </div>
+
+  <div class="mx-scroll">
+  <table class="sum">
+    <thead>
+      <tr><th>#</th><th>病歷號</th><th>寵物</th><th>物種／體重</th><th>主要問題</th><th>目前卡在哪</th><th>下一步</th><th>預計時程</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="no">1</td><td class="no">063446</td><td class="nm">Auburn</td><td>貓 Abyssinian<br>4.28 kg</td>
+        <td>左耳發炎性團塊，疑<b>中耳來源息肉</b></td>
+        <td><span class="st st1">CT 已做</span> 等看報告</td>
+        <td>8/26 17:00 聽 CT 報告 → 決定術式</td><td><b>9～10 月</b></td>
+      </tr>
+      <tr>
+        <td class="no">2</td><td class="no">000839</td><td class="nm">貢丸</td><td>法鬥 公 8 歲<br>10.5 kg</td>
+        <td>雙側中耳炎，<b>右鼓室泡破損＋內耳受破壞</b>，疑骨溶解</td>
+        <td><span class="st st1">CT 已做</span> 已報價，等飼主決定</td>
+        <td>飼主決策：<b>症狀控制手術 vs 內科</b></td><td><b>待飼主回覆</b></td>
+      </tr>
+      <tr>
+        <td class="no">3</td><td class="no">063934</td><td class="nm">MOMO</td><td>貓<br>3.14 kg</td>
+        <td>雙耳<b>耵聹腺腫瘤</b>＋右耳紅色發炎團塊</td>
+        <td><span class="st st2">血檢已做</span> 待排 CT</td>
+        <td>排頭部 CT（大豐週三／梅西週一）</td><td><b>CT 後定案</b></td>
+      </tr>
+      <tr>
+        <td class="no">4</td><td class="no">063954</td><td class="nm">DUDU</td><td>法鬥<br>9.16 kg</td>
+        <td>右耳道團塊＋<b>異位性皮膚炎</b>＋泌尿生殖問題</td>
+        <td><span class="st st3">術前評估未完成</span></td>
+        <td>台南華盛做血檢／尿檢／腹超，排除子宮蓄膿</td><td><b>評估完成後排 CT</b></td>
+      </tr>
+      <tr>
+        <td class="no">5</td><td class="no">041793</td><td class="nm">Budi</td><td>博美<br>5.9 kg</td>
+        <td>雙側<b>末期纖維化狹窄外耳炎</b>＋異位性皮膚炎</td>
+        <td><span class="st st4">刻意延後</span> 內科極限測試中</td>
+        <td>先完成食物排除試驗、控制異膚</td><td><b>11～12 月</b></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <!-- 1 Auburn -->
+  <section class="card c1" id="p1">
+    <div class="card-hd">
+      <span class="rank">1</span>
+      <span class="pn">🐱 Auburn</span>
+      <span class="pm">063446 ／ 貓 Abyssinian ／ 4.28 kg ／ 澳洲回台</span>
+      <span class="st st1" style="margin-left:auto;">CT 已完成・等報告</span>
+    </div>
+    <div class="card-bd">
+      <table class="f">
+        <tr><td class="k">診斷方向</td><td>左耳反覆化膿性外耳炎＋外耳道紅色團塊，高度懷疑<b>中耳來源的發炎性息肉</b>。右耳正常、耳膜完整、中耳無異常。左耳耳膜可能已破裂，團塊究竟源自外耳道、或由中耳壓迫穿破耳膜長出，需影像判斷。</td></tr>
+        <tr><td class="k">已完成</td>
+          <td><ul class="t">
+            <li><span class="done">✓</span> 2026.07.27　耳道內視鏡＋細胞學：大量白血球（含破損細胞核）、大量球菌與馬拉色菌；見紅色團塊</li>
+            <li><span class="done">✓</span> 2026.07.27　細菌培養送興大 → <b>結果為皮膚常在菌、無抗藥性</b> → 判定<b>不建議給抗生素</b></li>
+            <li><span class="done">✓</span> 2026.08.26　頭部 CT（原訂 8/24 改 8/26）</li>
+          </ul></td></tr>
+        <tr><td class="k">下一步</td>
+          <td><ul class="t">
+            <li><span class="wait">→</span> <b>8/26 17:00 已預約 DR. PETER 講報告</b>（掃斷層當天報到時請櫃台告知飼主）</li>
+            <li><span class="wait">→</span> 依 CT 範圍決定：外耳道／中耳／內耳</li>
+            <li><span class="wait">→</span> 若範圍適合 → 耳道內視鏡雷射手術，<b>術前兩週開始高劑量類固醇</b>（先抑制發炎，有些會自己縮小；也預防術後發炎反應）</li>
+          </ul></td></tr>
+        <tr><td class="k">術式重點</td>
+          <td><b>採樣與手術一次做完</b>——盡可能切乾淨再送病理，不先單獨採一小塊（採樣本身會引起發炎，且先知道良惡性對處置意義不大）。術中若中耳腔內有液體，<b>再送一次細菌培養</b>（與外耳道的分泌物不同）。術後兩週回診，之後一個月、三個月、半年逐步拉長。</td></tr>
+        <tr><td class="k">核心論述</td>
+          <td><b>「源頭不是感染，是發炎。」</b>耳道的發炎組織持續分泌黏液 → 黏液成為微生物養分 → 引發二次性感染。培養出的常在菌「沒有必要去殺、也殺不死殺不完」，貿然給抗生素太早也太粗糙。</td></tr>
+        <tr><td class="k">現階段處置</td><td>每天生理食鹽水清潔＋耳藥水；<b>暫不使用類固醇</b>——避免團塊縮進去而喪失診斷意義，也會影響病理判讀。已開 Gabapentin 100 mg 就診前兩小時（該貓不好操作）。</td></tr>
+      </table>
+      <div class="note"><span>📊</span><div><b>本院經驗值（可作為術前衛教）：</b>每週約一兩隻犬貓是這種中耳炎，每月至少一台手術，累積約 20 幾例、其中一兩例效果較差。<b>病理結果 90% 以上是發炎性、不是腫瘤性</b>。貓咪中耳炎多為雙側，且<b>耳膜還在時完全不會有症狀</b>。<b>復發率高</b>，有貓做過兩三次內視鏡後轉傳統手術。最久的已追蹤兩年無復發；但也有術後<b>第 7～8 天開始出現前庭症候群</b>（歪頭、大小眼、瞳孔不一、眼球震顫），<b>術後一週到一個月是觀察重點</b>。不處理則約六成持續惡化。</div></div>
+      <div class="fee"><b>費用：</b>頭部 CT 17,000（含麻醉與顯影劑）　·　耳道內視鏡雷射手術 <b>單耳 4～5 萬</b>（至少 3 小時起跳）</div>
+      <a class="rec" href="https://s1.vetbo.net/ECase2022.aspx?petID=JA2300005081157120_3&historySN=2300020260727143" target="_blank" rel="noopener">開啟院內病歷 →</a>
+    </div>
+  </section>
+
+  <!-- 2 貢丸 -->
+  <section class="card c2" id="p2">
+    <div class="card-hd">
+      <span class="rank">2</span>
+      <span class="pn">🐶 貢丸</span>
+      <span class="pm">000839 ／ French Bulldog 法鬥 ／ 公・未絕育 ／ 2018.03.05（8 歲 5 月）／ 10.5 kg</span>
+      <span class="st st1" style="margin-left:auto;">CT 已完成・待飼主決策</span>
+    </div>
+    <div class="card-bd">
+      <table class="f">
+        <tr><td class="k">CT 報告<br><span class="sub">2026.08.16</span></td>
+          <td>雙側鼓室泡內可見<b>液體或軟組織填充</b>，呈輕度顯影性；<b>左側鼓室泡增厚</b>；<b>右側鼓室泡局部破損且較擴張，內耳結構亦受破壞</b> → 推測可能為<b>慢性發炎或腫瘤性病灶</b>；左側內耳結構完整。雙側外耳殼可見多發高衰減度鈣化點。其餘頭部構造未見明顯異常。</td></tr>
+        <tr><td class="k">神經症狀<br><span class="sub">進展中</span></td>
+          <td><b>2026.08.10</b>：1～2 週前開始頭斜、走路搖晃，<b>體重掉 1 kg</b>；menace (++/+)、palpebral (++/+)、<b>右眼瞼下垂、左歪頭、右側嘴角下垂</b>。<br>
+              <b>2026.08.16</b>：head right tilt、<b>走路偏右</b>。<br>
+              <b>2026.08.22</b>：右邊臉比較垂一邊、右眼有膜狀結構跑出，<b>好像都是今年才發生</b>。<br>
+              <span class="sub">既往：2020～2021 曾有中耳／內耳炎併左側顏面神經麻痺，2020 年後神經症狀已完全緩解；2026.03 曾見水平眼球震顫，服 pred 後緩解。另有慢性皮膚病（CAD）、髖關節 DJD、hemivertebrae。</span></td></tr>
+        <tr><td class="k">蕭醫師評估<br><span class="sub">2026.08.22</span></td>
+          <td>懷疑<b>中耳骨頭已有骨溶解，且頭骨也會有溶解狀況</b>。<br>
+              → <b>手術只能嘗試做症狀控制</b>（例如止痛），術後可能有<b>造成神經學惡化</b>的風險。<br>
+              → 不做手術，之後可能出現更明確的神經症狀，<b>例如癲癇</b>。<br>
+              → 若術後出現併發症（如神經症狀），<b>建議住院</b>。</td></tr>
+        <tr><td class="k">目前用藥</td>
+          <td>Prednisolone 樂爾爽 5 mg/tab　2 tab ＝ <b>0.95 mg/kg</b>　SID × 7 天 × 4 週，飯後隨飯<br>
+              Omeprazole 歐克胃 20 mg/cap　0.5 cap（微粒膠囊，勿拆勿磨）<br>
+              Cortotic 耳剋癢噴劑 16 ml　<b>雙耳 SID</b></td></tr>
+      </table>
+      <div class="warn"><span>⚠️</span><div><b>這台不是根治性手術。</b>目標是症狀控制與止痛，且有神經學惡化的風險；不開刀則可能進展到更明確的神經症狀（癲癇）。<b>需要飼主在充分理解兩邊風險後決定</b>，並先把術後住院的可能性安排好。</div></div>
+      <div class="fee"><b>報價（2026.08.22）：</b>手術 <b>$35,000／耳</b>　·　麻醉 $5,000／小時（預估約 3 小時）　·　病理 $3,000　·　細菌培養 $1,350</div>
+      <a class="rec" href="https://s1.vetbo.net/MCaseHistory2016.aspx?PetID=JA2300012071429540_1&CaseHistoryYear=2018" target="_blank" rel="noopener">開啟院內病歷 →</a>
+    </div>
+  </section>
+
+  <!-- 3 MOMO -->
+  <section class="card c3" id="p3">
+    <div class="card-hd">
+      <span class="rank">3</span>
+      <span class="pn">🐱 MOMO</span>
+      <span class="pm">063934 ／ 貓 ／ 3.14 kg</span>
+      <span class="st st2" style="margin-left:auto;">血檢已完成・待排 CT</span>
+    </div>
+    <div class="card-bd">
+      <table class="f">
+        <tr><td class="k">診斷方向</td>
+          <td><b>兩個問題並存：</b><br>
+            ① <b>雙耳耵聹腺腫瘤</b>——耳道與耳殼上「一顆一顆、像葡萄」的黑色病灶，佔耳道團塊的八九成。病理上是惡性，但<b>10 隻貓大概有 9 隻不會轉移</b>，不會擴散到肺、肝，只在耳朵局部持續增生。<br>
+            ② <b>右耳另有一顆較大的紅色發炎性團塊</b>（不規則、凹狀）——會持續分泌黏液，與耵聹腺分泌的黏液混合，所以<b>右耳感染較嚴重</b>。<br>
+            分泌物多、味道很重，尚未化膿。目前尚未看到耳膜，中耳是否受累未知。無歪頭、無大小眼、走路正常。<br>
+            <span class="sub">外院表示「他們沒辦法處理」而轉來。</span></td></tr>
+        <tr><td class="k">已完成</td>
+          <td><ul class="t">
+            <li><span class="done">✓</span> 2026.08.16　耳道內視鏡＋細胞學：<b>雙耳大量桿菌</b>、大量發炎反應</li>
+            <li><span class="done">✓</span> 2026.08.17　麻醉前血檢：Procyte、生化 10 項、SDMA、<b>貓 ProBNP</b>（心臟快篩）</li>
+          </ul></td></tr>
+        <tr><td class="k">下一步</td>
+          <td><ul class="t">
+            <li><span class="wait">→</span> 排<b>頭部 CT</b>（大豐週三／梅西週一，兩院設備共用；飼主住處離大豐約 12 分鐘較近）</li>
+            <li><span class="done">○</span> 若<b>單純外耳</b> → 手術相對簡單，二氧化碳雷射「點一下就破掉、消掉」，把大顆的先消融</li>
+            <li><span class="stop">✕</span> 若<b>中耳或內耳也有</b> → <b>不建議手術</b>，改用外耳藥水控制</li>
+          </ul></td></tr>
+        <tr><td class="k">現階段處置</td>
+          <td>生理食鹽水＋乾棉球清潔（已現場教學）；耳剋癢 16 ml 雙耳 Q2-3D。<br>
+              <b>右耳那顆紅色的不要碰</b>——「如果你弄它，它是有可能會長大」。<br>
+              暈車（坐車會流口水）：已開 Gabapentin 50 mg 就診前服用，另給 4 顆 4 號空膠囊。</td></tr>
+      </table>
+      <div class="warn"><span>⚠️</span><div><b>餵藥能力是手術可行性的一部分。</b>目前口服膠囊<b>餵不下去</b>——硬塞會吐出來，打開撒在肉泥也不吃。術前術後都需要吃藥，「如果沒有辦法好好吃藥，手術的一些發炎狀況也會沒有辦法控制得很好」。已請飼主先調整餵藥技巧（膠囊餵深一點、餵完給水讓牠吞下去），<b>若調整後仍不行需綜合評估是否適合手術</b>。</div></div>
+      <div class="fee"><b>費用：</b>頭部 CT <b>17,000</b>（含麻醉與顯影劑，約 1 小時）　·　血檢已收 4,400</div>
+      <a class="rec" href="https://s1.vetbo.net/ECase2022.aspx?petID=JA2300008161159430_1&historySN=23000202608171425" target="_blank" rel="noopener">開啟院內病歷 →</a>
+    </div>
+  </section>
+
+  <!-- 4 DUDU -->
+  <section class="card c4" id="p4">
+    <div class="card-hd">
+      <span class="rank">4</span>
+      <span class="pn">🐶 DUDU</span>
+      <span class="pm">063954 ／ French Bulldog 法鬥 ／ 9.16 kg</span>
+      <span class="st st3" style="margin-left:auto;">術前評估未完成</span>
+    </div>
+    <div class="card-bd">
+      <table class="f">
+        <tr><td class="k">診斷方向</td>
+          <td><b>兩個問題並存，且第二個是關鍵：</b><br>
+            ① <b>右耳道團塊</b>（息肉／腫瘤／增生，統稱團塊）——不規則、凹狀，範圍大、<b>已阻塞耳道</b>；需病理才能區分。左耳較好、幾乎已看到耳膜（法鬥構造特殊，耳膜難以判讀）。三四個月來反覆發炎，近一兩個月明顯化膿；上上週外院說有變小，但<b>飼主近日發現肉眼就看得到了</b>。<br>
+            ② <b>異位性皮膚炎</b>（潛在病因，Favrot 符合）——「異位性皮膚炎發炎，全身的皮膚包括耳朵都算是皮膚的器官，都會處在慢性發炎的狀況。所以不管是息肉、腫瘤或是增生，都有可能會長大。<b>單純處理這個息肉會控制不好，甚至切掉我怕還是會再長。</b>」<br>
+            ③ <b>泌尿／生殖系統問題待釐清</b>——尿尿有時帶血、味道很重；上個月剛結束發情，一個半月前曾因「月經要走不走」＋流口水＋精神變差就診，做過腹部超音波、給抗生素。</td></tr>
+        <tr><td class="k">今日檢查<br><span class="sub">2026.08.17</span></td>
+          <td>耳道內視鏡＋細胞學染色：<b>右耳一顆一顆的發炎細胞、白血球內吞噬大量細菌</b>——以球菌為主，另有桿菌（桿菌抗藥性強）→ 確認<b>仍有感染狀況</b>。<br>
+              <span class="sub">另：⚠️ <b>聽力似乎變差</b>。皮膚半年前很嚴重（結痂、類似膿皮症），曾培養出高抗藥性細菌，現已大幅改善、正在長毛。關鍵線索：有一次錄影完一週內皮膚急速惡化。目前口服抗生素依培養報告選擇、連續兩週一天兩次，仍在吃、剩約一半；耳藥為長效耳通明。</span></td></tr>
+        <tr><td class="k">第一階段<br><span class="sub">術前評估<br>台南華盛</span></td>
+          <td><ul class="t">
+            <li><span class="wait">→</span> <b>血檢</b>：紅白血球、肝腎（心絲蟲已驗過可略）</li>
+            <li><span class="wait">→</span> <b>尿檢</b>：比重、試紙 → 確認有無感染</li>
+            <li><span class="wait">→</span> <b>腹部超音波</b> → 確認子宮／子宮頸有無分泌物；若有，可能需從分泌物做培養</li>
+            <li><span class="wait">→</span> 同時索取：<b>細菌培養報告、口服抗生素的種類與劑量、類固醇的種類與劑量</b>（耳通明成分已知，不需要）</li>
+            <li><span class="wait">→</span> 以上資料用 LINE 傳給醫師 → 評估口服藥要不要停、要不要換</li>
+          </ul>
+          <div class="warn" style="margin-top:10px;"><span>⚠️</span><div><b>這些必須在麻醉前先控制好</b>——「如果是泌尿生殖器的發炎，麻醉可能會出感染的風險會更高」。需先排除<b>子宮蓄膿</b>。</div></div></td></tr>
+        <tr><td class="k">第二階段<br><span class="sub">影像</span></td>
+          <td>身體狀況穩定後安排<b>頭部 CT（約 2 萬，含所有費用）</b>；若超音波有疑慮可加做腹腔，加約 2,000 元。<br>目的：確認團塊來源是<b>外耳道</b>還是<b>中耳</b>。</td></tr>
+        <tr><td class="k">第三階段<br><span class="sub">手術（若可行）</span></td>
+          <td><span class="done">○</span> 若<b>外耳道來源</b> → 內視鏡可切除，切下來送病理，<b>單耳切除手術約 3.5～5 萬</b>；術前需開始高劑量類固醇，手術通常<b>不需住院</b>。<br>
+              <span class="stop">✕</span> 若<b>中耳來源</b> → <b>法鬥沒辦法做</b>——「法鬥這邊多了一個骨頭，我們連最細的內視鏡都沒有辦法進去，更不用說要把裡面的東西切掉」→ 只能轉傳統外科（整個耳道與中耳切除，<b>術後就聽不到了</b>）。</td></tr>
+        <tr><td class="k">現階段處置</td>
+          <td>開<b>單純類固醇耳藥水</b>（無抗生素），先控制發炎。<br>
+              清潔<b>改用生理食鹽水</b>，不要用潔耳液、<b>不要用棉花棒</b>——「它一直在發炎，你每次弄都是一種刺激，它就會更長大」。右耳每天清一次；左耳（一般外耳炎）用潔耳液，兩三天一次即可。已現場示範清耳並確認飼主按摩位置正確。</td></tr>
+      </table>
+      <div class="warn"><span>⚠️</span><div><b>警訊：</b>若出現<b>歪頭或其他神經症狀 → 這是中耳炎的急症</b>，要立刻回診。（法鬥與短吻犬中耳炎很常見；目前有用抗生素與類固醇，中耳炎多少被壓制，應不至於突然發作。）<br>
+        <b>長期提醒：</b>「等到手術狀況都 OK、這些狀況解除了，可是停藥後牠皮膚又開始復發，那就真的會需要回到異位性皮膚炎的控制。」現在是因為有用藥所以看起來很好——等藥停掉後，異位性皮膚炎是食物性還是環境性才會浮現。</div></div>
+      <a class="rec" href="https://s1.vetbo.net/ECase2022.aspx?petID=JA2300006081049390_2&historySN=23000202608172011" target="_blank" rel="noopener">開啟院內病歷 →</a>
+    </div>
+  </section>
+
+  <!-- 5 Budi -->
+  <section class="card c5" id="p5">
+    <div class="card-hd">
+      <span class="rank">5</span>
+      <span class="pn">🐶 Budi</span>
+      <span class="pm">041793 ／ Pomeranian 博美 ／ 5.9 kg</span>
+      <span class="st st4" style="margin-left:auto;">刻意延後・11～12 月</span>
+    </div>
+    <div class="card-bd">
+      <table class="f">
+        <tr><td class="k">診斷方向</td>
+          <td><b>雙側重度慢性狹窄性外耳炎</b>——耳道已<b>纖維化、增厚</b>，屬<b>末期、不可逆</b>狀態（上皮已增生肥大到無法縮小）。合併<b>異位性皮膚炎</b>（環境或食物來源待釐清，醫師估「六七成偏向過敏」）。2026.08.22 蕭醫師另<b>懷疑雙耳耵聹腺增生</b>。<br>
+              <span class="sub">反覆外耳炎半年多，發作間隔從兩三個月縮短到兩三週；耳朵發炎時腳底也會同時紅腫。Favrot 八成以上符合。</span></td></tr>
+        <tr><td class="k">治療策略</td>
+          <td>先做<b>內科極限測試</b>——看藥物能不能讓纖維化組織逆轉。<b>若已用到內科的極限還是這樣，那可能真的就需要外科</b>（傳統全耳道切除）。<br>
+              <span class="sub">耳道嚴重狹窄且年紀輕（四五歲）仍需留意耳道腫瘤的可能，但診斷需切片，故先做非侵入性治療試驗。</span></td></tr>
+        <tr><td class="k">目前用藥</td>
+          <td>Prednisolone 樂爾爽 5 mg/tab　<b>約 1 mg/kg</b>（2026.08.22：11.66 tab ＝ 0.985 mg/kg，糖漿 2 cc SID × 10 天，飯後）<br>
+              Ciclosporin 止癢靈 100 mg/ml　<b>0.3 ml SID</b>（已從 0.1 每天增加 0.1 逐步調上來）——取其<b>抗纖維化作用</b>，目標是讓增生的上皮細胞萎縮<br>
+              Cortavance 酷斥癢噴劑（改用針筒抽取，每次約 0.15 cc，因狗會抬頭抗拒噴瓶）</td></tr>
+        <tr><td class="k">進展<br><span class="sub">08.03 → 08.17</span></td>
+          <td>右耳原本完全塞滿看不到內部，<b>兩週治療後已有縫隙打開</b>；左耳分泌物也開始能排出。細胞學：右耳桿菌＋球菌，左耳量較少、以球菌為主。搔抓頻率已明顯降低。<br>
+              <span class="sub">飼主覺得「分泌物怎麼越來越多」→ 那是原本塞在裡面排不出來的，耳道打開後才開始排出，<b>是好轉的訊號</b>。</span><br>
+              醫師判讀：「這種重度的外耳炎，已經纖維化了，老實說<b>可能要一個月半年以上才看得出一些變化</b>。」</td></tr>
+        <tr><td class="k">排程決定<br><span class="sub">2026.08.22 蕭醫師</span></td>
+          <td><b>建議先將異位性皮膚炎問題控制好（食物 or 環境）再處理耳朵狀況。</b><br>
+              → <b>預計 11 或 12 月處理耳朵</b>　·　已幫約 9 月回診<br>
+              <span class="sub">食物排除試驗進行中：法米納水解魚肉飼料（非鮭魚）＋豬肉＋地瓜＋白飯。<b>食物挑戰要等耳道狀況改善後才能做。</b></span></td></tr>
+      </table>
+      <div class="note"><span>💊</span><div><b>環孢素服藥時機的重要提醒：</b>雖然仿單說空腹效果最好，但現階段一律<b>隨餐</b>——「這個藥隨著餵藥時間變長，副作用會越來越明顯（食慾、嘔吐、下痢）。<b>一旦副作用出現，劑量就沒辦法給這麼高，效果就會變差。</b>」等穩定一個月後再考慮改空腹。<br>
+        <b>已出現的副作用：</b>尿量明顯增加、會半夜起來尿一次（類固醇），飼主表示不影響睡眠。</div></div>
+      <div class="warn"><span>⚠️</span><div><b>急症指標：</b>一旦歪頭即為急症——代表耳膜受傷後細菌進入中耳、再上行至內耳，內耳上方就是小腦，可能引發腦膜炎。</div></div>
+      <a class="rec" href="https://s1.vetbo.net/ECase2022.aspx?petID=JA2300001261611510_2&historySN=2300020260817175" target="_blank" rel="noopener">開啟院內病歷 →</a>
+    </div>
+  </section>
+
+</div>
+<div class="foot">耳道／中耳手術排程評估　·　資料來源：院內病歷系統（vetbo）各病例最新門診紀錄　·　整理於 2026.08.26　·　「開啟院內病歷」連結需登入院內系統才能開啟</div>
+</body>
+</html>
