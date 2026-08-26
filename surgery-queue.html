@@ -100,8 +100,26 @@
   a.rec{display:inline-block;margin-top:12px;padding:7px 13px;border-radius:8px;background:var(--navy);
     color:#fff;text-decoration:none;font-size:12.5px;font-weight:700;}
   a.rec:hover{background:#1d3a63;}
+
+  .img-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px;}
+  .img-grid.one{grid-template-columns:1fr;}
+  .img-fig{margin:0;}
+  .img-fig img{width:100%;height:300px;object-fit:contain;background:#0e0f12;border-radius:9px;
+    display:block;border:1px solid #e0e5ee;cursor:zoom-in;}
+  .img-fig figcaption{font-size:12px;color:#5a6577;text-align:center;margin-top:6px;line-height:1.6;}
+  .img-fig figcaption b{color:var(--navy);}
+  .img-fig figcaption .side{color:var(--red-tx);font-weight:700;}
+  .img-fig figcaption .ok{color:var(--green-tx);font-weight:700;}
+  #lb{position:fixed;inset:0;background:rgba(8,12,20,.94);display:none;align-items:center;
+    justify-content:center;z-index:99;padding:20px;cursor:zoom-out;}
+  #lb img{max-width:100%;max-height:100%;object-fit:contain;border-radius:6px;}
+  #lb .cap{position:absolute;bottom:14px;left:0;right:0;text-align:center;color:#cfd8e6;font-size:13px;}
   .foot{max-width:1120px;margin:22px auto 0;font-size:11.5px;color:#9aa5b6;line-height:1.8;text-align:right;}
-  @media (max-width:760px){ table.f td.k, table.f tr.pre td.k{width:112px;} }
+  @media (max-width:760px){
+    table.f td.k, table.f tr.pre td.k{width:112px;}
+    .img-grid{grid-template-columns:1fr;}
+    .img-fig img{height:250px;}
+  }
   @media print{
     body{background:#fff;padding:0;}
     .head,.card,table.sum{box-shadow:none;}
@@ -226,6 +244,25 @@
         </div>
         <div style="font-size:13.5px;line-height:1.9;border-left:3px solid #e0a3ae;padding:10px 0 10px 14px;background:#fffafb;color:#41506b;margin-top:10px;">
           <b>Impression：</b>左側水平外耳道團塊<b>較懷疑為繼發外耳炎之發炎性息肉</b>，其餘鑑別診斷包含<b>原發性腫瘤</b>，<b>建議進一步採樣確認</b>。
+        </div>
+        <div class="img-grid one" style="margin-top:14px;">
+          <figure class="img-fig"><img src="img/auburn-ct-1-mass-se8.jpg" alt="左側外耳道團塊 Se8 Im133">
+            <figcaption><b><span class="side">左側外耳道團塊</span></b>　橫斷面　軟組織窗 +C（WL40 WW350）　·　Se 8　Im 133/236<br>
+              <span class="sub">綠色箭頭標出團塊範圍　·　影像左側＝病患右側 (R)，故團塊位於畫面右方＝病患左耳</span></figcaption></figure>
+        </div>
+        <div class="img-grid">
+          <figure class="img-fig"><img src="img/auburn-ct-2-coronal-se11.jpg" alt="冠狀面 Se11 Im29">
+            <figcaption><b>同一團塊・冠狀面</b>　軟組織窗 +C　·　Se 11　Im 29/63<br>
+              <span class="sub">另一切面確認範圍</span></figcaption></figure>
+          <figure class="img-fig"><img src="img/auburn-ct-3-eustachian-se6.jpg" alt="耳咽管少量液體或軟組織 Se6 Im129">
+            <figcaption><b><span class="side">耳咽管少量液體或軟組織</span></b>　骨窗（WL500 WW3000）　·　Se 6　Im 129/236<br>
+              <span class="sub">術中建議確認耳咽管開口</span></figcaption></figure>
+          <figure class="img-fig"><img src="img/auburn-ct-4-bulla-se6.jpg" alt="雙側鼓室泡結構 Se6 Im140">
+            <figcaption><b><span class="ok">雙側鼓室泡結構</span></b>　骨窗　·　Se 6　Im 140/236<br>
+              <span class="sub">正常充氣，骨質無增厚或溶解</span></figcaption></figure>
+          <figure class="img-fig"><img src="img/auburn-ct-5-innerear-se6.jpg" alt="雙側內耳結構 Se6 Im139">
+            <figcaption><b><span class="ok">雙側內耳結構</span></b>　骨窗　·　Se 6　Im 139/236<br>
+              <span class="sub">左右對稱，未見破壞</span></figcaption></figure>
         </div>
         <div class="note"><span>✅</span><div><b>這份 CT 把手術難度往下修了。</b>術前原本高度懷疑「中耳來源的息肉」，但 CT 顯示<b>雙側中耳正常充氣、鼓室泡無增厚或骨溶解、內耳對稱、腦部無病灶</b>——病灶侷限在<b>左側水平外耳道</b>，只是<b>貼合鼓膜</b>。屬<b>耳道內視鏡可處理的範圍</b>，不必走傳統全耳道切除。</div></div>
         <div class="warn"><span>⚠️</span><div><b>兩點仍需在術中留意：</b><br>
@@ -718,5 +755,22 @@
 
 </div>
 <div class="foot">耳道／中耳手術排程評估　·　資料來源：院內病歷系統（vetbo）各病例門診紀錄　·　術前評估欄位沿用中耳炎病例整理模板 otitis-media-template.html　·　整理於 2026.08.26　·　「開啟院內病歷」連結需登入院內系統才能開啟</div>
+
+<div id="lb"><img alt=""><div class="cap"></div></div>
+<script>
+(function(){
+  var lb=document.getElementById("lb"), im=lb.querySelector("img"), cp=lb.querySelector(".cap");
+  document.querySelectorAll(".img-fig img").forEach(function(el){
+    el.addEventListener("click",function(){
+      im.src=el.src;
+      var f=el.parentNode.querySelector("figcaption");
+      cp.textContent=f?f.textContent.trim().split("\n")[0]:"";
+      lb.style.display="flex";
+    });
+  });
+  lb.addEventListener("click",function(){ lb.style.display="none"; im.src=""; });
+  document.addEventListener("keydown",function(e){ if(e.key==="Escape"){ lb.style.display="none"; im.src=""; } });
+})();
+</script>
 </body>
 </html>
