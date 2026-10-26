@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<title>AiCVD 模擬考</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap">
+<style>
+/*__CSS__*/
+</style>
+</head>
+<body>
+<div id="gate" class="gate">
+  <form id="gate-form" class="gate-card" autocomplete="off">
+    <p class="eyebrow">Asian College of Veterinary Dermatology</p>
+    <h1 class="gate-title">AiCVD<br>線上模擬考</h1>
+    <p class="gate-lead">個人讀書用的題庫與作答紀錄。請輸入密碼。</p>
+    <label for="gate-pass" class="field-label">題庫密碼</label>
+    <input id="gate-pass" type="password" class="input" required autocomplete="current-password" placeholder="輸入密碼解開題庫">
+    <label class="check"><input id="gate-remember" type="checkbox"> 在這台裝置記住（只存解密金鑰，不存密碼）</label>
+    <button id="gate-btn" class="btn btn-primary" type="submit">解鎖題庫</button>
+    <p id="gate-msg" class="gate-msg" role="status"></p>
+    <p class="gate-foot">題庫以 AES-256 加密存放；沒有密碼的人只會看到這個畫面。</p>
+  </form>
+</div>
+<div id="app" hidden></div>
+<div id="tip" class="tip" role="tooltip" hidden></div>
+<div id="toast" class="toast" role="status" hidden></div>
+<script id="bank-data" type="application/json">"__BANK__"</script>
+<script>
+/*__PARSER__*/
+</script>
+<script>
+/*__APP__*/
+</script>
+</body>
+</html>
