@@ -270,6 +270,8 @@ main.view { max-width: 1240px; margin: 0 auto; padding-block: 1.6rem 4rem; displ
 .x { background: var(--surface-2); border-radius: 8px; padding: .9rem 1rem; display: grid; gap: .5rem; }
 .x-title { font-size: var(--fs-0); font-weight: 700; color: var(--eosin); letter-spacing: .04em; }
 .refs { font-size: var(--fs-0); color: var(--ink-2); display: grid; gap: .15rem; }
+.verify { font-size: var(--fs-0); color: var(--ink-2); border-top: 1px dashed var(--line-strong); padding-top: .45rem; }
+.verify-t { font-weight: 700; color: var(--accent); margin-right: .5em; }
 .feedback { display: flex; gap: .6rem; align-items: center; font-weight: 600; }
 .qnav { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: space-between; align-items: center; }
 .qtools { display: flex; flex-wrap: wrap; gap: .4rem; }
