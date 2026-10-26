@@ -14,6 +14,7 @@
  *   K: 評分要點                   （每一條 1 分，屬於前一個 S）
  *   X: 解析（可多行）
  *   R: 參考文獻（可多行，每行一筆）
+ *   V: 文獻核對紀錄（✅ 已核對／✏️ 已依原文修正／⚠️ 部分未核實／📘 未對照原文），可多行
  *
  * 以 # 開頭的行是註解。以 @ 開頭的行設定之後各題的預設欄位，例如：
  *   @ part=mcq | dom=IMM | paper=A
@@ -125,6 +126,7 @@
       }
       if ((m = line.match(/^X:\s*(.*)$/))) { q.X = m[1]; last = 'X'; continue; }
       if ((m = line.match(/^R:\s*(.*)$/))) { q.R.push(m[1]); last = 'R'; continue; }
+      if ((m = line.match(/^V:\s*(.*)$/))) { q.V = (q.V ? q.V + '\n' : '') + m[1]; last = 'V'; continue; }
       if (line === '') {
         if (last === 'Q') q.Q += '\n';
         else if (last === 'X') q.X += '\n';
@@ -135,6 +137,7 @@
       else if (last === 'X') q.X += (/\n$/.test(q.X) ? '' : ' ') + line;
       else if (last === 'img') q.img += ' ' + line;
       else if (last === 'R') q.R.push(line);
+      else if (last === 'V') q.V += ' ' + line;
       else if (last === 'opt') q.opts[q.opts.length - 1].t += ' ' + line;
       else if (last === 'S') q.subs[q.subs.length - 1].t += ' ' + line;
       else if (last === 'K') { var ks = q.subs[q.subs.length - 1].k; ks[ks.length - 1] += ' ' + line; }

@@ -429,9 +429,10 @@
       (q.yr ? '<span class="chip">' + q.yr + '</span>' : '') + (q.custom ? '<span class="chip">自訂</span>' : '') + '</div>';
   }
   function explainHtml(q) {
-    if (!q.X && !q.R.length) return '';
+    if (!q.X && !q.R.length && !q.V) return '';
     return '<div class="x"><div class="x-title">解析</div>' + (q.X ? '<div>' + fmt(q.X) + '</div>' : '') +
-      (q.R.length ? '<div class="refs">' + q.R.map((r) => '<div>📄 ' + fmt(r) + '</div>').join('') + '</div>' : '') + '</div>';
+      (q.R.length ? '<div class="refs">' + q.R.map((r) => '<div>📄 ' + fmt(r) + '</div>').join('') + '</div>' : '') +
+      (q.V ? '<div class="verify"><span class="verify-t">文獻核對</span>' + fmt(q.V) + '</div>' : '') + '</div>';
   }
 
   function renderRunner() {
