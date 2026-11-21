@@ -358,7 +358,7 @@ table.t tr.clickable:hover td { background: var(--accent-soft); }
 .note { font-size: var(--fs-0); color: var(--ink-2); background: var(--surface-2); border-radius: 8px; padding: .7rem .9rem; }
 .confirm { border: 1px solid var(--bad); background: var(--bad-bg); color: var(--ink); border-radius: 8px; padding: .8rem 1rem; display: grid; gap: .6rem; }
 details > summary { cursor: pointer; font-weight: 600; }
-.fieldset { display: grid; gap: .4rem; }
+.fieldset { display: grid; gap: .4rem; align-content: start; }
 .seg { display: flex; flex-wrap: wrap; gap: .35rem; }
 .seg label { border: 1px solid var(--line-strong); border-radius: 999px; padding: .25em .8em; cursor: pointer; font-size: var(--fs-0); display: inline-flex; gap: .35em; align-items: center; }
 .seg input { accent-color: var(--accent); }
