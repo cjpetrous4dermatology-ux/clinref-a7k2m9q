@@ -34,6 +34,9 @@
   ];
   // 每個領域的建議讀物（內容在加密題庫 meta.read）
   let READ = {};
+  // Muller & Kirk 7e 章名（建置時由 chapters.js 放進題庫；'1'–'20' 與 H／F／X／S）
+  let MK = {};
+  const mkLabel = (k) => (/^\d+$/.test(k) ? 'Ch' + k + ' ' : '') + (MK[k] || k);
   const PAPER_NAMES = { R: '近年文獻精選（2016–2026）' };
   const paperName = (k) => PAPER_NAMES[k] || '試卷 ' + k;
   const DAY = 86400000;
@@ -425,6 +428,7 @@
   }
   function chipsHtml(q) {
     return '<div class="chips"><span class="chip">' + PARTS[q.part].name + '</span><span class="chip">' + DOMS[q.dom].n + '</span>' +
+      (q.mk && /^\d+$/.test(q.mk) ? '<span class="chip">Muller Ch' + q.mk + '</span>' : '') +
       (q.sp ? '<span class="chip">' + (SPN[q.sp] || q.sp) + '</span>' : '') + '<span class="chip">Grade ' + q.g + '</span><span class="chip">難度 ' + DIFF[q.diff] + '</span>' +
       (q.yr ? '<span class="chip">' + q.yr + '</span>' : '') + (q.custom ? '<span class="chip">自訂</span>' : '') + '</div>';
   }
@@ -638,11 +642,12 @@
 
   // ───────────────────────── 主題練習 ─────────────────────────
   function practiceDefaults() {
-    return { parts: ['mcq'], doms: [], sp: 'all', diff: [], era: 'all', pool: 'all', count: 20, timed: false };
+    return { parts: ['mcq'], doms: [], mk: 'all', sp: 'all', diff: [], era: 'all', pool: 'all', count: 20, timed: false };
   }
   function practicePool(c) {
     return B.questions.filter((q) => {
       if (c.parts.length && !c.parts.includes(q.part)) return false;
+      if (c.mk && c.mk !== 'all' && q.mk !== c.mk) return false;
       if (c.doms.length && !c.doms.includes(q.dom)) return false;
       if (c.sp !== 'all' && !(q.sp === c.sp || (c.sp === 'dog' && q.sp === 'dogcat') || (c.sp === 'cat' && q.sp === 'dogcat'))) return false;
       if (c.diff.length && !c.diff.includes(String(q.diff))) return false;
@@ -664,6 +669,8 @@
     let h = '<div class="view-head"><p class="eyebrow">Targeted practice</p><h2>主題練習</h2><p>每題作答後立刻對答案、看解析。選項順序預設隨機（設定可關），避免記位置。</p></div>';
     h += '<section class="panel"><div class="form-grid">' +
       '<div class="fieldset"><span class="field-label">部分</span><div class="seg">' + PART_ORDER.map((p) => box('parts', p, PARTS[p].name, c.parts.includes(p))).join('') + '</div></div>' +
+      '<div class="fieldset"><label class="field-label" for="pf-mk">Muller &amp; Kirk 7e 章節</label><select class="input" id="pf-mk" data-pf="mk"><option value="all">全部章節</option>' +
+        Object.keys(MK).map((k) => '<option value="' + k + '"' + (c.mk === k ? ' selected' : '') + '>' + esc(mkLabel(k)) + '</option>').join('') + '</select></div>' +
       '<div class="fieldset"><span class="field-label">物種</span><div class="seg">' + [['all', '全部'], ['dog', '犬'], ['cat', '貓'], ['horse', '馬'], ['farm', '經濟動物'], ['exotic', '異寵'], ['general', '通用']].map(([v, n]) => radio('sp', v, n)).join('') + '</div></div>' +
       '<div class="fieldset" style="grid-column:1/-1"><span class="field-label">領域（不選＝全部；括號是 Blueprint 權重）</span><div class="seg">' + Object.keys(DOMS).map((d) => box('doms', d, DOMS[d].n + ' <span class="muted">' + DOMS[d].w + '%</span>', c.doms.includes(d))).join('') + '</div></div>' +
       '<div class="fieldset"><span class="field-label">難度</span><div class="seg">' + [1, 2, 3].map((d) => box('diff', d, DIFF[d], c.diff.includes(String(d)))).join('') + '</div></div>' +
@@ -673,9 +680,36 @@
       '<div class="fieldset"><span class="field-label">計時</span><div class="seg">' + radio('timed', false, '不計時') + radio('timed', true, '依考場節奏') + '</div></div>' +
       '</div>' + (c.tag ? '<div class="row"><span class="pill pill-info">標籤：' + esc(c.tag) + '</span><button class="btn btn-sm btn-ghost" data-act="clear-tag">清除標籤</button></div>' : '') +
       '<div class="row"><button class="btn btn-primary" data-act="start-practice"' + (pool.length ? '' : ' disabled') + '>開始練習（' + Math.min(c.count, pool.length) + ' 題）</button><span class="small muted">符合條件 ' + pool.length + ' 題</span><button class="btn btn-sm btn-ghost" data-act="reset-practice">重設條件</button></div></section>';
+    h += chapterPanel();
     h += '<section class="panel"><div class="panel-head"><h3>搜尋題目</h3><span class="small muted">搜題幹、選項、解析與標籤</span></div>' +
       '<input class="input" id="search" type="search" placeholder="例如 desmocollin、lokivetmab、Sporothrix、flame follicle" value="' + esc(ui.search) + '">' + '<div id="search-results">' + searchResults() + '</div></section>';
     return h;
+  }
+  // 依章節先做題、再讀書：每格是「做過／總題數」，點下去練那一章的那個題型（沒做過的優先）
+  function chapterPanel() {
+    const keys = Object.keys(MK);
+    if (!keys.length) return '';
+    const t = {};
+    for (const q of B.questions) {
+      if (!q.mk) continue;
+      const r = t[q.mk] || (t[q.mk] = {});
+      const c = r[q.part] || (r[q.part] = { n: 0, done: 0 });
+      c.n++;
+      if (S.hist[q.id]) c.done++;
+    }
+    const cell = (k, p) => {
+      const c = (t[k] || {})[p];
+      if (!c) return '<td class="num"><span class="pill pill-bad">0</span></td>';
+      return '<td class="num"><button class="btn btn-sm btn-ghost" data-act="drill-mk" data-mk="' + k + '" data-part="' + p + '" title="練 ' + esc(mkLabel(k)) + ' 的' + PARTS[p].name + '">' + c.done + ' / ' + c.n + '</button></td>';
+    };
+    const row = (k) => {
+      const all = PART_ORDER.reduce((a, p) => { const c = (t[k] || {})[p]; return c ? { n: a.n + c.n, done: a.done + c.done } : a; }, { n: 0, done: 0 });
+      return '<tr><td>' + esc(mkLabel(k)) + '</td>' + PART_ORDER.map((p) => cell(k, p)).join('') +
+        '<td class="num">' + (all.n ? '<button class="btn btn-sm" data-act="drill-mk" data-mk="' + k + '">' + pct(all.done / all.n) + '</button>' : '—') + '</td></tr>';
+    };
+    return '<section class="panel"><div class="panel-head"><h3>依 Muller 章節練習</h3><span class="small muted">先做這一章的題目，再讀這一章。數字是「做過／總題數」，點數字開始練。</span></div>' +
+      '<div class="table-wrap"><table class="t"><thead><tr><th>章節</th>' + PART_ORDER.map((p) => '<th class="num">' + PARTS[p].name + '</th>').join('') + '<th class="num">整章</th></tr></thead><tbody>' +
+      keys.map(row).join('') + '</tbody></table></div></section>';
   }
   function searchResults() {
     const term = ui.search.trim().toLowerCase();
@@ -898,10 +932,16 @@
       case 'drill-wrong': startList(wrongActive().filter((id) => Q[id].dom === el.dataset.dom), '錯題：' + DOMS[el.dataset.dom].n, 'review'); break;
       case 'drill-tag': ui.practice = Object.assign(practiceDefaults(), { parts: [], tag: el.dataset.tag }); drill('標籤：' + el.dataset.tag); break;
       case 'clear-tag': delete ui.practice.tag; render(); break;
+      case 'drill-mk': {
+        const p = el.dataset.part;
+        ui.practice = Object.assign(practiceDefaults(), { parts: p ? [p] : [], mk: el.dataset.mk });
+        drill(mkLabel(el.dataset.mk) + (p ? ' ' + PARTS[p].name : ''));
+        break;
+      }
       case 'start-practice': {
         const c = ui.practice;
         const pool = shuffle(practicePool(c)).slice(0, c.count);
-        const ss = newSession({ mode: 'practice', part: c.parts.length === 1 ? c.parts[0] : 'mixed', title: '練習：' + (c.doms.length ? c.doms.map((d) => DOMS[d].n).join('、') : c.parts.map((p) => PARTS[p].name).join('、') || '全部'), qids: pool.map((q) => q.id) });
+        const ss = newSession({ mode: 'practice', part: c.parts.length === 1 ? c.parts[0] : 'mixed', title: '練習：' + (c.mk && c.mk !== 'all' ? mkLabel(c.mk) + ' ' : '') + (c.doms.length ? c.doms.map((d) => DOMS[d].n).join('、') : c.parts.map((p) => PARTS[p].name).join('、') || '全部'), qids: pool.map((q) => q.id) });
         if (c.timed) ss.limit = Math.round(sum(pool.map((q) => q.min)) * 60);
         begin(ss);
         break;
@@ -1081,6 +1121,7 @@
     const meta = bank.meta || {};
     for (const p in meta.parts || {}) Object.assign(PARTS[p], meta.parts[p]);
     READ = meta.read || {};
+    MK = bank.chapters || {};
     TIPS = meta.tips || [];
     TEXT = meta.text || {};
     index();

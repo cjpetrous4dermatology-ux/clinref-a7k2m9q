@@ -25,6 +25,7 @@ const BANK_ENC = path.join(HERE, 'bank.enc.json');
 const SRC_ENC = path.join(HERE, 'bank-src.enc.json');
 const ITER = 600000;
 const { parseBank, DOMAINS, PARTS } = require('./parser.js');
+const { NAMES: MK_NAMES, chapterOf } = require('./chapters.js');
 
 function passphrase() {
   if (process.env.EXAM_PASS) return process.env.EXAM_PASS;
@@ -91,6 +92,8 @@ function compile(files) {
     if (seen.has(q.id)) errors.push('重複的題號 ' + q.id);
     seen.add(q.id);
     if (q.fig && !figures[q.fig]) errors.push(q.id + ': 找不到圖 figures/' + q.fig + '.svg');
+    if (q.mk && !MK_NAMES[q.mk]) errors.push(q.id + ': mk 不正確 "' + q.mk + '"（1–20 或 H／F／X／S）');
+    q.mk = chapterOf(q);
   }
   let meta = {};
   if (files['meta.json']) {
@@ -115,6 +118,13 @@ function stats(questions) {
     papers[k] = (papers[k] || 0) + 1;
   }
   console.log('各卷', papers);
+  const ch = {};
+  for (const q of questions) {
+    ch[q.mk] = ch[q.mk] || { mcq: 0, essay: 0, image: 0, histo: 0 };
+    ch[q.mk][q.part]++;
+  }
+  console.log('Muller & Kirk 7e 章節（0 題的題型要補）');
+  console.table(Object.keys(MK_NAMES).map((k) => ({ ch: k, name: MK_NAMES[k], ...(ch[k] || { mcq: 0, essay: 0, image: 0, histo: 0 }) })));
   console.log('物種', by('sp'));
   console.log('難度', by('diff'));
   const recent = questions.filter((q) => q.yr && q.yr >= 2016).length;
@@ -157,7 +167,7 @@ function build({ rekey = false } = {}) {
     catch { console.error('密碼與現有加密檔不符。若要換密碼請用 rekey。'); process.exit(1); }
   }
   const key = deriveKey(pass, salt);
-  const bank = { builtAt: new Date().toISOString(), questions, figures, meta };
+  const bank = { builtAt: new Date().toISOString(), questions, figures, meta, chapters: MK_NAMES };
   const bankEnv = encrypt(bank, key, salt);
   fs.writeFileSync(BANK_ENC, JSON.stringify(bankEnv));
   fs.writeFileSync(SRC_ENC, JSON.stringify(encrypt({ files }, key, salt)));
